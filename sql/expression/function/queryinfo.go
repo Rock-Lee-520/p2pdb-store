@@ -1,6 +1,6 @@
 package function
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 // RowCount implements the ROW_COUNT() function
 type RowCount struct{}

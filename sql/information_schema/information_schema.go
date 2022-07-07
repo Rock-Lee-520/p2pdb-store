@@ -24,11 +24,11 @@ import (
 	"github.com/dolthub/vitess/go/sqltypes"
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 
+	. "github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/analyzer"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 	debugs "github.com/favframework/debug"
-	. "github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/analyzer"
-	"github.com/kkguan/p2pdb-store/sql/parse"
-	"github.com/kkguan/p2pdb-store/sql/plan"
 )
 
 const (

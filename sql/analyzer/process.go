@@ -15,8 +15,8 @@
 package analyzer
 
 import (
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // trackProcess will wrap the query in a process node and add progress items

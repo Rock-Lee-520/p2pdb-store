@@ -1,8 +1,8 @@
-module github.com/kkguan/p2pdb-store
+module github.com/Rock-liyi/p2pdb-store
 
 go 1.17
 
-replace github.com/kkguan/p2pdb-store => ../p2pdb-store
+replace github.com/Rock-liyi/p2pdb-store => ../p2pdb-store
 
 require (
 	github.com/caarlos0/env/v6 v6.9.1
@@ -15,7 +15,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/hashicorp/golang-lru v0.5.4
 	github.com/joho/godotenv v1.4.0
-	github.com/kkguan/p2pdb-server v0.1.1
+	github.com/Rock-liyi/p2pdb-server v0.1.1
 	github.com/lestrrat-go/strftime v1.0.5
 	github.com/mitchellh/hashstructure v1.1.0
 	github.com/oliveagle/jsonpath v0.0.0-20180606110733-2e52cf6e6852

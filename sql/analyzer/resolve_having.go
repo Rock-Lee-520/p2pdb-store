@@ -20,10 +20,10 @@ import (
 
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/expression/function/aggregation"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function/aggregation"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 func resolveHaving(ctx *sql.Context, a *Analyzer, node sql.Node, scope *Scope) (sql.Node, error) {

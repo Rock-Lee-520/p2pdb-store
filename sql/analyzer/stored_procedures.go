@@ -20,10 +20,10 @@ import (
 
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/parse"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // loadStoredProcedures loads stored procedures for all databases on relevant calls.

@@ -24,8 +24,8 @@ import (
 
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 type LoadData struct {

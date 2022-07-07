@@ -20,8 +20,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Tests taken from https://dev.mysql.com/doc/refman/8.0/en/regexp.html#regexp-syntax

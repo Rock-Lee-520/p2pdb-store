@@ -17,7 +17,7 @@ package plan
 import (
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 var ErrDeleteFromNotSupported = errors.NewKind("table doesn't support DELETE FROM")

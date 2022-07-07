@@ -26,7 +26,7 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // Rand returns a random float 0 <= x < 1. If it has an argument, that argument will be used to seed the random number

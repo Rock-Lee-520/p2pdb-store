@@ -18,7 +18,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // TriggerBeginEndBlock represents a BEGIN/END block specific to TRIGGER execution, which has special considerations

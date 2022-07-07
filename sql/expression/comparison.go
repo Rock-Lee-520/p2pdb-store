@@ -20,8 +20,8 @@ import (
 
 	errors "gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/internal/regex"
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/internal/regex"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 var ErrInvalidRegexp = errors.NewKind("Invalid regular expression: %s")

@@ -14,7 +14,7 @@
 
 package sqlite
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 // Harness provides a way for database integrators to validate their implementation against the standard set of queries
 // used to develop and test the engine itself. See memory_engine_test.go for an example.

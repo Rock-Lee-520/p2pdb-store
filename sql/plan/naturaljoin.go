@@ -14,7 +14,7 @@
 
 package plan
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 // NaturalJoin is a join that automatically joins by all the columns with the
 // same name.

@@ -19,8 +19,8 @@ import (
 
 	"github.com/mitchellh/hashstructure"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Count node to count how many rows are in the result set.

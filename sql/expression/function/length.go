@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"unicode/utf8"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Length returns the length of a string or binary content, either in bytes

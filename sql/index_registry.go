@@ -21,7 +21,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/kkguan/p2pdb-store/internal/similartext"
+	"github.com/Rock-liyi/p2pdb-store/internal/similartext"
 )
 
 // IndexRegistry keeps track of all driver-provided indexes in the engine.

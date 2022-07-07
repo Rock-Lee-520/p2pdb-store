@@ -17,7 +17,7 @@ package sqlite
 import (
 	"io"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // tablePartitionIter is used as a sql.PartitionIter.

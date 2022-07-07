@@ -5,9 +5,9 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/Rock-liyi/p2pdb-store/internal/similartext"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 	debug "github.com/favframework/debug"
-	"github.com/kkguan/p2pdb-store/internal/similartext"
-	"github.com/kkguan/p2pdb-store/sql"
 )
 
 // memoryDBProvider is a collection of Database.

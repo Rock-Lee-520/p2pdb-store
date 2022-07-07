@@ -19,10 +19,10 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/Rock-liyi/p2pdb-store/internal/similartext"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function"
 	debug "github.com/favframework/debug"
-	"github.com/kkguan/p2pdb-store/internal/similartext"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression/function"
 )
 
 type Catalog struct {

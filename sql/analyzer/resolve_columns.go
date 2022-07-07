@@ -22,10 +22,10 @@ import (
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/internal/similartext"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/internal/similartext"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 func checkUniqueTableNames(ctx *sql.Context, a *Analyzer, n sql.Node, scope *Scope) (sql.Node, error) {

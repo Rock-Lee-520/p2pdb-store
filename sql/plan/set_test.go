@@ -23,9 +23,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/memory"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/memory"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 func TestSet(t *testing.T) {

@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Split receives a string and returns the parts of it splitted by a

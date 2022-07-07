@@ -15,7 +15,7 @@
 package expression
 
 import (
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 type BindVar struct {

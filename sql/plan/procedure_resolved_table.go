@@ -15,7 +15,7 @@
 package plan
 
 import (
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // ProcedureResolvedTable represents a resolved SQL Table inside of a stored procedure. These are initially resolved to

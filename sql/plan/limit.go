@@ -20,7 +20,7 @@ import (
 
 	opentracing "github.com/opentracing/opentracing-go"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // Limit is a node that only allows up to N rows to be retrieved.

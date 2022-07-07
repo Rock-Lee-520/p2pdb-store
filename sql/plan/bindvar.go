@@ -15,8 +15,8 @@
 package plan
 
 import (
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // ApplyBindings replaces all `BindVar` expressions in the given sql.Node with

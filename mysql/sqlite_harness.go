@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Rock-liyi/p2pdb-store/sql"
 	debug "github.com/favframework/debug"
-	"github.com/kkguan/p2pdb-store/sql"
 )
 
 // SQLITEHarness is a harness for a local SQLITE server. This will modify databases and tables as the tests see fit, which

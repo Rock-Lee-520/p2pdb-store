@@ -17,8 +17,8 @@ package analyzer
 import (
 	"strings"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // resolveDropConstraint replaces DropConstraint nodes with a concrete type of alter table node as appropriate, or

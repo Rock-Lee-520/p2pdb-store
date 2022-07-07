@@ -22,12 +22,12 @@ import (
 
 	//	log "github.com/sirupsen/logrus"
 
+	conf "github.com/Rock-liyi/p2pdb-store/config"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/dolthub/vitess/go/sqltypes"
 	debug "github.com/favframework/debug"
-	conf "github.com/kkguan/p2pdb-store/config"
-	"github.com/kkguan/p2pdb-store/sql"
 
-	//dbParse "github.com/kkguan/p2pdb-store/sql/parse"
+	//dbParse "github.com/Rock-liyi/p2pdb-store/sql/parse"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/opentracing/opentracing-go/log"
 )

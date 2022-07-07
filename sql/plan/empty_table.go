@@ -14,7 +14,7 @@
 
 package plan
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 // EmptyTable is a node representing an empty table.
 var EmptyTable = new(emptyTable)

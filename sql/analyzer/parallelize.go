@@ -19,8 +19,8 @@ import (
 
 	"github.com/go-kit/kit/metrics/discard"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 var (

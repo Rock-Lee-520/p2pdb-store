@@ -15,8 +15,8 @@
 package analyzer
 
 import (
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // beginTransaction begins a new transaction if one is not currently in progress, by wrapping any top-level node given

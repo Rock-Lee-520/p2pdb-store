@@ -17,8 +17,8 @@ package function
 import (
 	"fmt"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // NullIf function compares two expressions and returns NULL if they are equal. Otherwise, the first expression is returned.

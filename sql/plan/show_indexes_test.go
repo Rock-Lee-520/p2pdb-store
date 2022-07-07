@@ -20,11 +20,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/kkguan/p2pdb-store/memory"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/parse"
-	. "github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/memory"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse"
+	. "github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 func TestShowIndexes(t *testing.T) {

@@ -25,8 +25,8 @@ import (
 	"github.com/shopspring/decimal"
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/internal/regex"
-	istrings "github.com/kkguan/p2pdb-store/internal/strings"
+	"github.com/Rock-liyi/p2pdb-store/internal/regex"
+	istrings "github.com/Rock-liyi/p2pdb-store/internal/strings"
 )
 
 const (

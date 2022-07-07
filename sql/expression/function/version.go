@@ -17,7 +17,7 @@ package function
 import (
 	"fmt"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 const mysqlVersion = "8.0.11"

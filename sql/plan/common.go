@@ -14,7 +14,7 @@
 
 package plan
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 // IsUnary returns whether the node is unary or not.
 func IsUnary(node sql.Node) bool {

@@ -19,8 +19,8 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Ceil returns the smallest integer value not less than X.

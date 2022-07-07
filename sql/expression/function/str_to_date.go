@@ -3,8 +3,8 @@ package function
 import (
 	"fmt"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/parse/dateparse"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse/dateparse"
 )
 
 // NewStrToDate constructs a new function expression from the given child expressions.

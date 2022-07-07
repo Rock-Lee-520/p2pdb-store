@@ -17,7 +17,7 @@ package plan
 import (
 	"io"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // Distinct is a node that ensures all rows that come from it are unique.

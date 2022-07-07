@@ -18,7 +18,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // ShowCreateDatabase returns the SQL for creating a database.

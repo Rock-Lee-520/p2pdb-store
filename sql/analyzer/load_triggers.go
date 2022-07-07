@@ -17,9 +17,9 @@ package analyzer
 import (
 	"strings"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/parse"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // loadTriggers loads any triggers that are required for a plan node to operate properly (except for nodes dealing with

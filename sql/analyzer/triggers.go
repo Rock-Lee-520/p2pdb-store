@@ -20,11 +20,11 @@ import (
 
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 	debugs "github.com/favframework/debug"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/parse"
-	"github.com/kkguan/p2pdb-store/sql/plan"
 )
 
 // validateCreateTrigger handles CreateTrigger nodes, resolving references to "old" and "new" table references in

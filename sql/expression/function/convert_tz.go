@@ -20,7 +20,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 var offsetRegex = regexp.MustCompile(`(?m)^(\+|\-)(\d{2}):(\d{2})$`) // (?m)^\+|\-(\d{2}):(\d{2})$

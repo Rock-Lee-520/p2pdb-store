@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // ProcedureSecurityContext determines whether the stored procedure is executed using the privileges of the definer or

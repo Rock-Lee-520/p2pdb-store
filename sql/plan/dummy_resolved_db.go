@@ -14,7 +14,7 @@
 
 package plan
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 // DummyResolvedDB is a transient database useful only for instances where a database is not available but required.
 // No tables are persisted, nor will be returned.

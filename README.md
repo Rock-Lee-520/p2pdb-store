@@ -5,14 +5,14 @@
 
 ## Go 文档
 
-* [p2pdb-store godoc](https://godoc.org/github.com/kkguan/p2pdb-store)
+* [p2pdb-store godoc](https://godoc.org/github.com/Rock-liyi/p2pdb-store)
 
 ## 致谢
 
 **p2pdb-store** 内存存储的代码来源于go-mysql-server，其组织为dolthub组织,这里感谢dolthub组织的付出,sqlite的驱动因未寻找到合适实现,由p2pdb维护团队自行开发。
 
 ## 部分代码参考来源
-[go-mysql-server](http://github.com/kkguan/p2pdb-store):遵守Apache License 2.0协议
+[go-mysql-server](http://github.com/Rock-liyi/p2pdb-store):遵守Apache License 2.0协议
 
 ## License
 

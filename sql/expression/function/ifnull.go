@@ -17,8 +17,8 @@ package function
 import (
 	"fmt"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // IfNull function returns the specified value IF the expression is NULL, otherwise return the expression.

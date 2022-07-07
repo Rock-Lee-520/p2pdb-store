@@ -21,8 +21,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/kkguan/p2pdb-store/internal/regex"
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/internal/regex"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 func newDefaultLikeMatcher(likeStr string) (regex.DisposableMatcher, error) {

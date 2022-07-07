@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Set represents a set statement. This can be variables, but in some instances can also refer to row values.

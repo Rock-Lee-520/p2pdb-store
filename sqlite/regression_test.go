@@ -17,8 +17,8 @@ package sqlite_test
 import (
 	"testing"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sqlite"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sqlite"
 )
 
 func TestIssue361(t *testing.T) {

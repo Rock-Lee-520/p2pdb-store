@@ -19,7 +19,7 @@ import (
 
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 var errCannotSetField = errors.NewKind("Expected GetField expression on left but got %T")

@@ -20,8 +20,8 @@ import (
 	"github.com/stretchr/testify/require"
 	errors "gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 func TestArrayLength(t *testing.T) {

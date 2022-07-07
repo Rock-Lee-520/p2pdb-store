@@ -19,8 +19,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Soundex is a function that returns the soundex of a string. Two strings that

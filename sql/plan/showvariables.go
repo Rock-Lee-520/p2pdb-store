@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // ShowVariables is a node that shows the global and session variables

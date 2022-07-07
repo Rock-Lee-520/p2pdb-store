@@ -20,7 +20,7 @@ import (
 	"github.com/dolthub/vitess/go/mysql"
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // CreateDB creates an in memory database that lasts the length of the process only.

@@ -14,7 +14,7 @@
 
 package function
 
-import "github.com/kkguan/p2pdb-store/sql"
+import "github.com/Rock-liyi/p2pdb-store/sql"
 
 type ConnectionID struct {
 	NoArgFunc

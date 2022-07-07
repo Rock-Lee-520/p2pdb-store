@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // RuleFunc is the function to be applied in a rule.

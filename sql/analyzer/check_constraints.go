@@ -20,10 +20,10 @@ import (
 
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/parse"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/parse"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // validateCreateCheck legal expressions for CREATE CHECK statements, including those embedded in CREATE TABLE

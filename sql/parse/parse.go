@@ -26,12 +26,12 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"gopkg.in/src-d/go-errors.v1"
 
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function/aggregation"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 	debug "github.com/favframework/debug"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/expression/function"
-	"github.com/kkguan/p2pdb-store/sql/expression/function/aggregation"
-	"github.com/kkguan/p2pdb-store/sql/plan"
 )
 
 var (

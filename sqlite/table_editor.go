@@ -21,9 +21,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	conf "github.com/Rock-liyi/p2pdb-store/config"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 	debug "github.com/favframework/debug"
-	conf "github.com/kkguan/p2pdb-store/config"
-	"github.com/kkguan/p2pdb-store/sql"
 )
 
 // tableEditor manages the edits that a table receives.

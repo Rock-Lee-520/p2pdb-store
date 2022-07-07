@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // Sqrt is a function that returns the square value of the number provided.

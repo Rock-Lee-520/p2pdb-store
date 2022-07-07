@@ -17,7 +17,7 @@ package function
 import (
 	"strings"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // NoArgFunc is a helper type to reduce boilerplate in functions that take no arguments. Implements most of

@@ -15,9 +15,9 @@
 package analyzer
 
 import (
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // flattenAggregationExpressions flattens any complex aggregate or window expressions in a GroupBy or Window node and

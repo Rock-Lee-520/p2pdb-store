@@ -19,10 +19,10 @@ import (
 
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/internal/similartext"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression/function/aggregation"
-	"github.com/kkguan/p2pdb-store/sql/expression/function/aggregation/window"
+	"github.com/Rock-liyi/p2pdb-store/internal/similartext"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function/aggregation"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function/aggregation/window"
 )
 
 // ErrFunctionAlreadyRegistered is thrown when a function is already registered

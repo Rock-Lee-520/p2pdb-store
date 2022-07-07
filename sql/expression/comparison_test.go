@@ -19,9 +19,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/kkguan/p2pdb-store/internal/regex"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/internal/regex"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 const (

@@ -17,8 +17,8 @@ package analyzer
 import (
 	"strings"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 // declarationScope holds the scope of DECLARE statements relative to their depth in the plan tree.

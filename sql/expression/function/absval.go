@@ -19,8 +19,8 @@ import (
 
 	"github.com/shopspring/decimal"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 // AbsVal is a function that takes the absolute value of a number

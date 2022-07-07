@@ -19,8 +19,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 )
 
 func TestJsonArrayAgg_Name(t *testing.T) {

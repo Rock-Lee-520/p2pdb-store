@@ -21,11 +21,11 @@ import (
 
 	"gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	"github.com/kkguan/p2pdb-store/sql/expression/function"
-	"github.com/kkguan/p2pdb-store/sql/expression/function/aggregation"
-	"github.com/kkguan/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression/function/aggregation"
+	"github.com/Rock-liyi/p2pdb-store/sql/plan"
 )
 
 const (
@@ -756,7 +756,7 @@ func validateReadOnlyTransaction(ctx *sql.Context, a *Analyzer, n sql.Node, scop
 // expression node appears outside of a GroupBy or Window node. Only GroupBy
 // and Window nodes know how to evaluate Aggregation expressions.
 //
-// See https://github.com/kkguan/p2pdb-store/issues/542 for some queries
+// See https://github.com/Rock-liyi/p2pdb-store/issues/542 for some queries
 // that should be supported but that currently trigger this validation because
 // aggregation expressions end up in the wrong place.
 func validateAggregations(ctx *sql.Context, a *Analyzer, n sql.Node, scope *Scope) (sql.Node, error) {

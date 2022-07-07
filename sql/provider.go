@@ -19,7 +19,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/kkguan/p2pdb-store/internal/similartext"
+	"github.com/Rock-liyi/p2pdb-store/internal/similartext"
 )
 
 // databaseProvider is a collection of Database.

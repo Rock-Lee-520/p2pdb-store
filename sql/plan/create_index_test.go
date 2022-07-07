@@ -21,11 +21,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kkguan/p2pdb-store/memory"
-	"github.com/kkguan/p2pdb-store/sql"
-	"github.com/kkguan/p2pdb-store/sql/expression"
-	. "github.com/kkguan/p2pdb-store/sql/plan"
-	"github.com/kkguan/p2pdb-store/test"
+	"github.com/Rock-liyi/p2pdb-store/memory"
+	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	. "github.com/Rock-liyi/p2pdb-store/sql/plan"
+	"github.com/Rock-liyi/p2pdb-store/test"
 
 	"github.com/stretchr/testify/require"
 )

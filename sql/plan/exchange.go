@@ -23,7 +23,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	errors "gopkg.in/src-d/go-errors.v1"
 
-	"github.com/kkguan/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb-store/sql"
 )
 
 // ErrNoPartitionable is returned when no Partitionable node is found
