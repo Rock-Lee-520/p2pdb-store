@@ -20,6 +20,7 @@ import (
 	"strconv"
 	"time"
 
+	debug "github.com/favframework/debug"
 	"github.com/shopspring/decimal"
 	"gopkg.in/src-d/go-errors.v1"
 
@@ -647,6 +648,8 @@ func convertToFloat64(t numberTypeImpl, v interface{}) (float64, error) {
 }
 
 func mustInt64(v interface{}) int64 {
+	debug.Dump("mustInt64")
+	debug.Dump(v)
 	switch tv := v.(type) {
 	case int:
 		return int64(tv)
@@ -664,6 +667,7 @@ func mustInt64(v interface{}) int64 {
 		}
 		return int64(0)
 	default:
+		debug.Dump(tv)
 		panic("unexpected type")
 	}
 }
