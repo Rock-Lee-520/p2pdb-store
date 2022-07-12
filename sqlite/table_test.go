@@ -27,6 +27,10 @@ import (
 	"github.com/Rock-liyi/p2pdb-store/sqlite"
 )
 
+func init() {
+
+}
+
 func TestTablePartitionsCount(t *testing.T) {
 	require := require.New(t)
 	table := sqlite.NewPartitionedTable("foo", sql.PrimaryKeySchema{}, 5)

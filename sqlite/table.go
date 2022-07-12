@@ -16,6 +16,7 @@ package sqlite
 
 import (
 	"bytes"
+	dbsql "database/sql"
 	"encoding/gob"
 	"fmt"
 	"io"
@@ -25,8 +26,10 @@ import (
 
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
+	config "github.com/Rock-liyi/p2pdb/infrastructure/util/config"
 	"github.com/dolthub/vitess/go/sqltypes"
 	debug "github.com/favframework/debug"
+	"github.com/opentracing/opentracing-go/log"
 	errors "gopkg.in/src-d/go-errors.v1"
 )
 
@@ -201,8 +204,8 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		sqlStatement = sqlStatement + " )"
 	}
 
-	//debug.Dump(sqlStatement)
-	return &Table{
+	debug.Dump(sqlStatement)
+	table := &Table{
 		name:          name,
 		schema:        schema,
 		partitions:    partitions,
@@ -211,6 +214,30 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		autoColIdx:    autoIncIdx,
 		sqlStatement:  sqlStatement,
 	}
+	table.createTableToSqlite(table)
+	return table
+}
+
+func (t *Table) createTableToSqlite(table *Table) {
+	//it create a  file table by sqlite
+	debug.Dump("=========Table createTableToSqlite method")
+	debug.Dump(table.sqlStatement)
+	path := config.GetDataPath()
+	DBname := config.GetDBName()
+
+	DBPath := path + "/" + DBname + ".db"
+	debug.Dump(DBPath)
+	db, err := dbsql.Open("sqlite3", DBPath)
+	if err != nil {
+		log.Error(err)
+	}
+	result, err := db.Exec(table.sqlStatement)
+	//_, err = db.connection.Exec(table.sqlStatement)
+	debug.Dump(result)
+	if err != nil {
+		log.Error(err)
+	}
+	debug.Dump("=========Table createTableToSqlite method end")
 }
 
 // Name implements the sql.Table interface.
@@ -266,7 +293,35 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 
 	//debug===============
 	if ctx.RawStatement() == "" {
-		return nil, sql.ErrTableNotFound.New("RawStatement func  is null")
+		//from testing.T
+		rows, ok := t.partitions[string(partition.Key())]
+		if !ok {
+			return nil, sql.ErrPartitionNotFound.New(partition.Key())
+		}
+
+		var values sql.IndexValueIter
+		if t.lookup != nil {
+			var err error
+			values, err = t.lookup.(sql.DriverIndexLookup).Values(partition)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		// The slice could be altered by other operations taking place during iteration (such as deletion or insertion), so
+		// make a copy of the values as they exist when execution begins.
+		rowsCopy := make([]sql.Row, len(rows))
+
+		copy(rowsCopy, rows)
+		debug.Dump(partition)
+		return &tableIter{
+			rows:        rowsCopy,
+			indexValues: values,
+			columns:     t.columns,
+			filters:     t.filters,
+		}, nil
+
+		//return nil, sql.ErrTableNotFound.New("RawStatement func  is null")
 	}
 
 	QueryRows, err := ctx.Connection().Query(ctx.RawStatement())

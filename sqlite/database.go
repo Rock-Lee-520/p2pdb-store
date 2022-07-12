@@ -368,13 +368,8 @@ func (d *BaseDatabase) ParseColumnStringToSqlType(atype string) (sql.Type, error
 
 	for _, t := range types {
 		// t.Run(test.columnType, func(t *testing.T) {
-		//debug.Dump(atype)
 		if atype == t.columnType {
-			debug.Dump("=======expectedSqlType is ")
-			debug.Dump(t.expectedSqlType)
 			return t.expectedSqlType, nil
-			debug.Dump("=======expectedSqlType2 is ")
-			debug.Dump(t.expectedSqlType)
 		}
 	}
 	debug.Dump("can not find any sql type")
