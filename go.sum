@@ -56,12 +56,11 @@ github.com/Kubuxu/go-os-helper v0.0.1/go.mod h1:N8B+I7vPCT80IcP58r50u4+gEEcsZETF
 github.com/OneOfOne/xxhash v1.2.2 h1:KMrpdQIwFcEqXDklaen+P1axHaj9BSKzvpUUfnHldSE=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=
-github.com/Rock-liyi/p2pdb v0.0.0-20220711143833-23a667524d1a h1:GekKERC0l+BZKE+n8kxHFMroHaRFee7NYevBycnqFoo=
-github.com/Rock-liyi/p2pdb v0.0.0-20220711143833-23a667524d1a/go.mod h1:vLogQFON3I4/Ao4Vau5dAZWS7W9z+TMAtZf2O5GBNtQ=
 github.com/Rock-liyi/p2pdb-log v0.0.0-20220710152438-0fcbd2cb401f h1:L6o7INXQGlgBstcTFHHtMr/mJaFzlYX1EQDKEdVYZh0=
 github.com/Rock-liyi/p2pdb-log v0.0.0-20220710152438-0fcbd2cb401f/go.mod h1:3sRgrrWCZ0v/9OFdd5cdXAM1LtkjBUlb5y0tYTEQVXU=
 github.com/Rock-liyi/p2pdb-server v0.1.2/go.mod h1:chCGBC9tGlpv8Oo27CLkyKQlpVGSRrJWgFXQk4Z6Ooc=
 github.com/Rock-liyi/p2pdb-store v0.1.0/go.mod h1:a6ONL/QOz18Z0EEJM/niNjAfZUqd7zHbG8DAMdzFp6g=
+github.com/Rock-liyi/p2pdb-store v0.1.2/go.mod h1:Fy2jeEzhc6TII0K6mC4PtyU0oAJI9dxTW+KZRLkA268=
 github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWXgklEdEo=
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/Stebalien/go-bitfield v0.0.1/go.mod h1:GNjFpasyUVkHMsfEOk8EFLJ9syQ6SI+XWrX9Wf2XH0s=
@@ -913,7 +912,6 @@ github.com/libp2p/go-libp2p-transport-upgrader v0.4.6/go.mod h1:JE0WQuQdy+uLZ5zO
 github.com/libp2p/go-libp2p-transport-upgrader v0.5.0/go.mod h1:Rc+XODlB3yce7dvFV4q/RmyJGsFcCZRkeZMu/Zdg0mo=
 github.com/libp2p/go-libp2p-transport-upgrader v0.6.0/go.mod h1:1e07y1ZSZdHo9HPbuU8IztM1Cj+DR5twgycb4pnRzRo=
 github.com/libp2p/go-libp2p-transport-upgrader v0.7.0/go.mod h1:GIR2aTRp1J5yjVlkUoFqMkdobfob6RnAwYg/RZPhrzg=
-github.com/libp2p/go-libp2p-transport-upgrader v0.7.1/go.mod h1:GIR2aTRp1J5yjVlkUoFqMkdobfob6RnAwYg/RZPhrzg=
 github.com/libp2p/go-libp2p-xor v0.0.0-20210714161855-5c005aca55db/go.mod h1:LSTM5yRnjGZbWNTA/hRwq2gGFrvRIbQJscoIL/u6InY=
 github.com/libp2p/go-libp2p-yamux v0.1.2/go.mod h1:xUoV/RmYkg6BW/qGxA9XJyg+HzXFYkeXbnhjmnYzKp8=
 github.com/libp2p/go-libp2p-yamux v0.1.3/go.mod h1:VGSQVrqkh6y4nm0189qqxMtvyBft44MOYYPpYKXiVt4=

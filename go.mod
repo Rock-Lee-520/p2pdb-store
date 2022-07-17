@@ -2,6 +2,8 @@ module github.com/Rock-liyi/p2pdb-store
 
 go 1.16
 
+// replace github.com/Rock-liyi/p2pdb => ../p2pdb
+
 require (
 	github.com/Rock-liyi/p2pdb v0.0.0-20220711143833-23a667524d1a
 	github.com/Rock-liyi/p2pdb-log v0.0.0-20220710152438-0fcbd2cb401f

@@ -20,6 +20,7 @@ import (
 
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sqlite"
+	_ "github.com/Rock-liyi/p2pdb/application/event/subscribe" //注册事件监听
 )
 
 func newPersistedSqlContext() *sql.Context {
