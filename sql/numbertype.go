@@ -110,6 +110,7 @@ func MustCreateNumberType(baseType query.Type) NumberType {
 }
 
 func NumericUnaryValue(t Type) interface{} {
+	debug.Dump("======NumericUnaryValue")
 	nt := t.(numberTypeImpl)
 	switch nt.baseType {
 	case sqltypes.Int8:
@@ -143,6 +144,8 @@ func NumericUnaryValue(t Type) interface{} {
 
 // Compare implements Type interface.
 func (t numberTypeImpl) Compare(a interface{}, b interface{}) (int, error) {
+
+	debug.Dump("====Compare 2")
 	if hasNulls, res := compareNulls(a, b); hasNulls {
 		return res, nil
 	}
@@ -204,6 +207,7 @@ func (t numberTypeImpl) Compare(a interface{}, b interface{}) (int, error) {
 
 // Convert implements Type interface.
 func (t numberTypeImpl) Convert(v interface{}) (interface{}, error) {
+	debug.Dump("Convert======")
 	if v == nil {
 		return nil, nil
 	}
@@ -449,6 +453,7 @@ func (t numberTypeImpl) IsSigned() bool {
 }
 
 func convertToInt64(t numberTypeImpl, v interface{}) (int64, error) {
+	debug.Dump("convertToInt64======")
 	switch v := v.(type) {
 	case int:
 		return int64(v), nil
@@ -494,18 +499,18 @@ func convertToInt64(t numberTypeImpl, v interface{}) (int64, error) {
 			return 0, ErrInvalidValue.New(v, t.String())
 		}
 		return i, nil
-	case string:
-		// Parse first an integer, which allows for more values than float64
-		i, err := strconv.ParseInt(v, 10, 64)
-		if err == nil {
-			return i, nil
-		}
-		// If that fails, try as a float and truncate it to integral
-		f, err := strconv.ParseFloat(v, 64)
-		if err != nil {
-			return 0, ErrInvalidValue.New(v, t.String())
-		}
-		return int64(f), nil
+	// case string:
+	// 	// Parse first an integer, which allows for more values than float64
+	// 	i, err := strconv.ParseInt(v, 10, 64)
+	// 	if err == nil {
+	// 		return i, nil
+	// 	}
+	// 	// If that fails, try as a float and truncate it to integral
+	// 	f, err := strconv.ParseFloat(v, 64)
+	// 	if err != nil {
+	// 		return 0, ErrInvalidValue.New(v, t.String())
+	// 	}
+	// 	return int64(f), nil
 	case bool:
 		if v {
 			return 1, nil
@@ -519,6 +524,7 @@ func convertToInt64(t numberTypeImpl, v interface{}) (int64, error) {
 }
 
 func convertToUint64(t numberTypeImpl, v interface{}) (uint64, error) {
+	debug.Dump("convertToUint64======")
 	switch v := v.(type) {
 	case int:
 		if v < 0 {
@@ -597,6 +603,7 @@ func convertToUint64(t numberTypeImpl, v interface{}) (uint64, error) {
 }
 
 func convertToFloat64(t numberTypeImpl, v interface{}) (float64, error) {
+	debug.Dump("convertToFloat64======")
 	switch v := v.(type) {
 	case int:
 		return float64(v), nil

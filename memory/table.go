@@ -459,6 +459,7 @@ func increment(v interface{}) interface{} {
 }
 
 func rowsAreEqual(ctx *sql.Context, schema sql.Schema, left, right sql.Row) (bool, error) {
+	debug.Dump("===== rowsAreEqual")
 	if len(left) != len(right) || len(left) != len(schema) {
 		return false, nil
 	}
