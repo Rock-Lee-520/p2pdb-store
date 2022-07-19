@@ -20,6 +20,7 @@ import (
 	"strconv"
 	"time"
 
+	debug "github.com/favframework/debug"
 	"github.com/shopspring/decimal"
 	"gopkg.in/src-d/go-errors.v1"
 
@@ -337,6 +338,7 @@ func (t numberTypeImpl) Promote() Type {
 
 // SQL implements Type interface.
 func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
+	debug.Dump("======= SQL method start")
 	if v == nil {
 		return sqltypes.NULL, nil
 	}
@@ -344,6 +346,7 @@ func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
 	var val []byte
 	switch t.baseType {
 	case sqltypes.Int8, sqltypes.Int16, sqltypes.Int24, sqltypes.Int32, sqltypes.Int64:
+		debug.Dump(t.baseType)
 		val = []byte(strconv.FormatInt(mustInt64(v), 10))
 	case sqltypes.Uint8, sqltypes.Uint16, sqltypes.Uint24, sqltypes.Uint32, sqltypes.Uint64:
 		val = []byte(strconv.FormatUint(mustUint64(v), 10))
@@ -354,7 +357,7 @@ func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
 	default:
 		panic(ErrInvalidBaseType.New(t.baseType.String(), "number"))
 	}
-
+	debug.Dump("======= SQL method end")
 	return sqltypes.MakeTrusted(t.baseType, val), nil
 }
 
@@ -647,6 +650,8 @@ func convertToFloat64(t numberTypeImpl, v interface{}) (float64, error) {
 }
 
 func mustInt64(v interface{}) int64 {
+	//debug.Dump("mustInt64")
+	//debug.Dump(v)
 	switch tv := v.(type) {
 	case int:
 		return int64(tv)
@@ -663,7 +668,16 @@ func mustInt64(v interface{}) int64 {
 			return int64(1)
 		}
 		return int64(0)
+	case string:
+		debug.Dump("mustInt64 method unexpected type, type string translate to int64 ")
+		i64, err := strconv.ParseInt(tv, 10, 64)
+		if err != nil {
+			debug.Dump(err.Error())
+		}
+
+		return i64
 	default:
+		//debug.Dump(tv)
 		panic("unexpected type")
 	}
 }
