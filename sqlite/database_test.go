@@ -80,3 +80,38 @@ func TestDatabase_DropTable(t *testing.T) {
 		require.Error(err)
 	}
 }
+
+func TestBaseDatabase_Tables(t *testing.T) {
+	require := require.New(t)
+	db := sqlite.NewDatabase("test")
+
+	tableName := "userinfo"
+
+	columns := map[string]*sql.Column{
+		"c1": {Name: "c1", Type: sql.Text, Source: tableName},
+		"c2": {Name: "c1", Type: sql.Int32, Source: tableName},
+	}
+
+	var schema sql.Schema
+	for _, column := range columns {
+		schema = append(schema, column)
+	}
+
+	s := sql.NewPrimaryKeySchema(schema)
+
+	err := db.CreateTable(sql.NewEmptyContext(), tableName, s)
+	require.NoError(err)
+
+	tables := db.Tables()
+	tt, ok := tables[tableName]
+
+	require.True(ok)
+	require.NotNil(tt)
+
+	for _, column := range tt.Schema() {
+		col, ok := columns[column.Name]
+		require.True(ok)
+		require.Equal(col.Type, column.Type)
+		require.Equal(col.Source, column.Source)
+	}
+}

@@ -440,8 +440,9 @@ func (d *BaseDatabase) getTable(name string) *Table {
 			log.Error(err)
 		}
 		newSchemaWithoutCol[i] = &sql.Column{
-			Name: Name,
-			Type: sqlType,
+			Name:   Name,
+			Type:   sqlType,
+			Source: name,
 		}
 		i++
 	}
