@@ -178,15 +178,15 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 	// make a copy of the values as they exist when execution begins.
 	rowsCopy := make([]sql.Row, len(rows))
 	copy(rowsCopy, rows)
-	debug.Dump("==============values ")
-	debug.Dump(rowsCopy)
-	debug.Dump("==============columnsInt ")
-	debug.Dump(t.columns)
-	debug.Dump("==============filters ")
-	debug.Dump(t.filters)
-	debug.Dump("==============values ")
-	debug.Dump(values)
-	debug.Dump("==============PartitionRows end ")
+	// debug.Dump("==============values ")
+	// debug.Dump(rowsCopy)
+	// debug.Dump("==============columnsInt ")
+	// debug.Dump(t.columns)
+	// debug.Dump("==============filters ")
+	// debug.Dump(t.filters)
+	// debug.Dump("==============values ")
+	// debug.Dump(values)
+	// debug.Dump("==============PartitionRows end ")
 
 	return &tableIter{
 		rows:        rowsCopy,

@@ -23,11 +23,13 @@ import (
 	//	log "github.com/sirupsen/logrus"
 
 	conf "github.com/Rock-liyi/p2pdb-store/config"
+	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/dolthub/vitess/go/sqltypes"
 	debug "github.com/favframework/debug"
 
 	//dbParse "github.com/Rock-liyi/p2pdb-store/sql/parse"
+	commonEvent "github.com/Rock-liyi/p2pdb/domain/common/event"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/opentracing/opentracing-go/log"
 )
@@ -454,15 +456,15 @@ func (d *BaseDatabase) getTable(name string) *Table {
 func (d *BaseDatabase) GetTableInsensitive(ctx *sql.Context, tblName string) (sql.Table, bool, error) {
 	debug.Dump("========-> GetTableInsensitive")
 	//ctx := newPersistedSqlContext()
-	debug.Dump(ctx.Query())
-	debug.Dump(ctx.RawStatement())
+	// debug.Dump(ctx.Query())
+	// debug.Dump(ctx.RawStatement())
 	// //debug.Dump("==========GetCurrentDatabase")
 	ctx.Session.SetCurrentDatabase(d.Name())
 	ctx.Session.SetAddress(d.Address())
 	ctx.Session.SetConnection(d.Connection())
 	// debug.Dump(ctx.Session.GetCurrentDatabase())
 	// debug.Dump(ctx.Session.Address())
-	debug.Dump("========-> GetTableInsensitive sql.Row")
+	// debug.Dump("========-> GetTableInsensitive sql.Row")
 	// debug.Dump(d.tables)
 	//	d.tables = d.Tables()
 	tbl, ok := sql.GetTableInsensitive(tblName, d.tables)
@@ -472,24 +474,25 @@ func (d *BaseDatabase) GetTableInsensitive(ctx *sql.Context, tblName string) (sq
 }
 
 func (d *BaseDatabase) GetTableNames(ctx *sql.Context) ([]string, error) {
-	debug.Dump("========-> GetTableNames")
+	tblNames := make([]string, 0, len(d.tables))
+	for k := range d.tables {
+		tblNames = append(tblNames, k)
+	}
 
-	// for k := range d.tables {
-	// 	tblNames = append(tblNames, k)
-	// }
+	return tblNames, nil
+}
 
-	//db := NewDatabase("test")
+func (d *BaseDatabase) GetTableNamesBak(ctx *sql.Context) ([]string, error) {
+	debug.Dump("========-> GetTableNames start")
+
 	d.tables = d.Tables()
 	tblNames := make([]string, 0, len(d.tables))
 	for k := range d.tables {
 		tblNames = append(tblNames, k)
 	}
 
-	// debug.Dump("========-> tables")
-	// debug.Dump(tables)
-	// debug.Dump("========-> tables")
-	// debug.Dump(tblNames)
-	// debug.Dump("========-> tblNames")
+	debug.Dump("========-> GetTableNames end")
+
 	return tblNames, nil
 }
 
@@ -591,10 +594,11 @@ func (d *BaseDatabase) createTableToSqlite(table *Table) {
 	// }
 	// result, err := db.Exec(table.sqlStatement)
 	_, err := d.connection.Exec(table.sqlStatement)
-	//debug.Dump(result)
+
 	if err != nil {
 		log.Error(err)
 	}
+	event.PublishSyncEvent(commonEvent.StoreCreateTableEvent, table.sqlStatement)
 	debug.Dump("=========createTableToSqlite method end")
 }
 

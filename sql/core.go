@@ -686,7 +686,7 @@ func GetTableInsensitive(tblName string, tables map[string]Table) (Table, bool) 
 	if tbl, ok := tables[tblName]; ok {
 		return tbl, true
 	}
-	debug.Dump("============GetTableInsensitive-2")
+	//debug.Dump("============GetTableInsensitive-2")
 	lwrName := strings.ToLower(tblName)
 	//debug.Dump(tables)
 	for k, tbl := range tables {

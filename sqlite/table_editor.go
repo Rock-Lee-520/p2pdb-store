@@ -24,7 +24,7 @@ import (
 	conf "github.com/Rock-liyi/p2pdb-store/config"
 	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
-	common_event "github.com/Rock-liyi/p2pdb/domain/common/event"
+	commonEvent "github.com/Rock-liyi/p2pdb/domain/common/event"
 	debug "github.com/favframework/debug"
 )
 
@@ -452,18 +452,15 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 		address = dataPath + dataName + ".db"
 
 	}
-	// debug.Dump("=======GetCurrentDatabase")
-	// debug.Dump(address)
 
 	db, err := dbsql.Open("sqlite3", address)
 
-	//dbConnection := ctx.Session.Connection()
 	if err != nil {
 		debug.Dump(err.Error())
 		return err
 	}
 
-	event.PublishSyncEvent(common_event.StoreInsertEvent, sqlStatement)
+	event.PublishSyncEvent(commonEvent.StoreInsertEvent, sqlStatement)
 	_, err = db.Exec(sqlStatement)
 
 	if err != nil {

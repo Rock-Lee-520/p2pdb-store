@@ -54,9 +54,7 @@ func (i *TableRowIter) Next(ctx *Context) (Row, error) {
 
 		i.partition = partition
 	}
-	debug.Dump("============TableRowIter partition1   start")
-	debug.Dump(i.partition.Key())
-	debug.Dump("============TableRowIter partition1 end")
+
 	if i.rows == nil {
 		rows, err := i.table.PartitionRows(ctx, i.partition)
 		if err != nil {
@@ -65,16 +63,11 @@ func (i *TableRowIter) Next(ctx *Context) (Row, error) {
 
 		i.rows = rows
 	}
-	debug.Dump("============TableRowIter Next  row1 start")
-	debug.Dump(i.rows)
-	debug.Dump("============TableRowIter Next row1 end")
+
 	row, err := i.rows.Next(ctx)
-	debug.Dump("============TableRowIter Next  row2 start")
-	debug.Dump(row)
-	debug.Dump("============TableRowIter Next row2 end")
 
 	if err != nil && err == io.EOF {
-		debug.Dump(err)
+		debug.Dump(err.Error())
 		if err = i.rows.Close(ctx); err != nil {
 			return nil, err
 		}

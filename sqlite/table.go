@@ -214,7 +214,7 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		autoColIdx:    autoIncIdx,
 		sqlStatement:  sqlStatement,
 	}
-	table.createTableToSqlite(table)
+	//table.createTableToSqlite(table)
 	return table
 }
 
@@ -260,25 +260,39 @@ func (t *Table) GetPartition(key string) []sql.Row {
 }
 
 // Partitions implements the sql.Table interface.
+// func (t *Table) Partitions(ctx *sql.Context) (sql.PartitionIter, error) {
+// 	debug.Dump("============Partitions start ")
+// 	debug.Dump(t.partitionKeys)
+// 	//var keys [][]byte
+// 	// for k, v := range copyQueryRows {
+// 	// 	if k{
+// 	// 		keys = append(keys, v)
+// 	// 	}
+// 	// }
+// 	var keys [][]byte
+// 	for _, k := range t.partitionKeys {
+// 		if rows, ok := t.partitions[string(k)]; ok && len(rows) > 0 {
+// 			keys = append(keys, k)
+
+// 		}
+// 	}
+
+// 	debug.Dump("============Partitions end ")
+// 	return &partitionIter{keys: t.partitionKeys}, nil
+// }
+
+// Partitions implements the sql.Table interface.
 func (t *Table) Partitions(ctx *sql.Context) (sql.PartitionIter, error) {
 	debug.Dump("============Partitions start ")
-	debug.Dump(t.partitionKeys)
-	//var keys [][]byte
-	// for k, v := range copyQueryRows {
-	// 	if k{
-	// 		keys = append(keys, v)
-	// 	}
-	// }
 	var keys [][]byte
 	for _, k := range t.partitionKeys {
 		if rows, ok := t.partitions[string(k)]; ok && len(rows) > 0 {
 			keys = append(keys, k)
-
 		}
 	}
-
+	debug.Dump(t.partitionKeys)
 	debug.Dump("============Partitions end ")
-	return &partitionIter{keys: t.partitionKeys}, nil
+	return &partitionIter{keys: keys}, nil
 }
 
 // PartitionCount implements the sql.PartitionCounter interface.
