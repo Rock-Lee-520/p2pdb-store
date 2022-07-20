@@ -508,8 +508,9 @@ func (d *BaseDatabase) GetTableSchema(name string) (sql.PrimaryKeySchema, error)
 			log.Error(err)
 		}
 		newSchemaWithoutCol[i] = &sql.Column{
-			Name: Name,
-			Type: sqlType,
+			Name:   Name,
+			Type:   sqlType,
+			Source: name,
 		}
 		i++
 	}
@@ -538,21 +539,21 @@ func (d *BaseDatabase) GetTableInsensitive(ctx *sql.Context, tblName string) (sq
 	// //	d.tables = d.Tables()
 
 	tbl, ok := sql.GetTableInsensitive(tblName, d.tables)
-	if ok == false {
+	// if ok == false {
 
-		schema, err := d.GetTableSchema(tblName)
-		if err == nil {
-			table := NewTable(tblName, sql.NewPrimaryKeySchema(schema.Schema))
-			// debug.Dump(table)
-			d.AddTable(tblName, table)
+	// 	schema, err := d.GetTableSchema(tblName)
+	// 	if err == nil {
+	// 		table := NewTable(tblName, sql.NewPrimaryKeySchema(schema.Schema))
+	// 		// debug.Dump(table)
+	// 		d.AddTable(tblName, table)
 
-			debug.Dump("========-> GetTableInsensitive tables2")
-			debug.Dump(d.tables)
-		}
+	// 		debug.Dump("========-> GetTableInsensitive tables2")
+	// 		debug.Dump(d.tables)
+	// 	}
 
-	}
+	// }
 
-	tbl, ok = sql.GetTableInsensitive(tblName, d.tables)
+	// tbl, ok = sql.GetTableInsensitive(tblName, d.tables)
 	debug.Dump("========-> GetTableInsensitive end")
 	return tbl, ok, nil
 }
