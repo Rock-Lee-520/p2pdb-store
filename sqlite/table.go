@@ -89,72 +89,6 @@ func NewTable(name string, schema sql.PrimaryKeySchema) *Table {
 	return NewPartitionedTable(name, schema, 0)
 }
 
-// getAllTables select all  Table in the database .
-// func getAllTables() *Table {
-// 	debug.Dump("======= getAllTables method")
-// 	return &Table{}
-// }
-
-//  PartitionedTable get a  Table with the given name, schema and number of partitions.
-// func getPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions int) *Table {
-// 	var keys [][]byte
-// 	var partitions = map[string][]sql.Row{}
-
-// 	if numPartitions < 1 {
-// 		numPartitions = 1
-// 	}
-// 	//debug.Dump(schema.Schema)
-// 	for i := 0; i < numPartitions; i++ {
-// 		key := strconv.Itoa(i)
-// 		keys = append(keys, []byte(key))
-// 		partitions[key] = []sql.Row{}
-// 	}
-
-// 	var autoIncVal interface{}
-// 	autoIncIdx := -1
-// 	//splice the sql statement
-// 	//sqlStatement := "CREATE TABLE  IF NOT EXISTS " + name
-// 	sqlStatement := "CREATE TABLE  " + name
-// 	var count = 0
-// 	var hasName = false
-
-// 	for i, c := range schema.Schema {
-
-// 		if c.AutoIncrement {
-// 			autoIncVal = sql.NumericUnaryValue(c.Type)
-// 			autoIncIdx = i
-// 			break
-// 		}
-// 		if c.Name != "" && count == 0 {
-// 			sqlStatement = sqlStatement + " ("
-// 			hasName = true
-// 		}
-// 		sqlStatement = sqlStatement + " " + c.Name + " " + c.Type.Type().String()
-
-// 		if c.Nullable == false {
-// 			sqlStatement = sqlStatement + " NOT NULL"
-// 		}
-
-// 		sqlStatement = sqlStatement + ","
-// 		count++
-// 	}
-// 	sqlStatement = strings.TrimRight(sqlStatement, ",")
-// 	if hasName {
-// 		sqlStatement = sqlStatement + " )"
-// 	}
-
-// 	//debug.Dump(sqlStatement)
-// 	return &Table{
-// 		name:          name,
-// 		schema:        schema,
-// 		partitions:    partitions,
-// 		partitionKeys: keys,
-// 		autoIncVal:    autoIncVal,
-// 		autoColIdx:    autoIncIdx,
-// 		sqlStatement:  sqlStatement,
-// 	}
-// }
-
 // NewPartitionedTable creates a new Table with the given name, schema and number of partitions.
 func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions int) *Table {
 	var keys [][]byte
@@ -175,6 +109,7 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 	//splice the sql statement
 	//sqlStatement := "CREATE TABLE  IF NOT EXISTS " + name
 	sqlStatement := "CREATE TABLE  " + name
+	oldSqlStatement := "CREATE TABLE  " + name
 	var count = 0
 	var hasName = false
 
@@ -199,9 +134,14 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		sqlStatement = sqlStatement + ","
 		count++
 	}
-	sqlStatement = strings.TrimRight(sqlStatement, ",")
-	if hasName {
-		sqlStatement = sqlStatement + " )"
+
+	if sqlStatement == oldSqlStatement {
+		sqlStatement = ""
+	} else {
+		sqlStatement = strings.TrimRight(sqlStatement, ",")
+		if hasName {
+			sqlStatement = sqlStatement + " )"
+		}
 	}
 
 	debug.Dump(sqlStatement)

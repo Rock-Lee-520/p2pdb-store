@@ -453,6 +453,73 @@ func (d *BaseDatabase) getTable(name string) *Table {
 	return NewPartitionedTable(name, schema, 0)
 }
 
+func (d *BaseDatabase) GetTableSchema(name string) (sql.PrimaryKeySchema, error) {
+	debug.Dump("======= getTable method")
+	// rowss, err := d.connection.QueryContext(sql.NewEmptyContext(), "PRAGMA table_info('"+name+"')")
+	// debug.Dump(rowss.Columns())
+	// if err != nil {
+	// 	log.Error(err)
+	// }
+	rows, err := d.connection.Query("PRAGMA table_info('" + name + "')")
+
+	// rows, err := d.connection.Query("select name from sqlite_master  where name !='sqlite_sequence' ")
+	// rows, err := d.connection.Query("select * from test_table5 ")
+
+	// debug.Dump("========-> PRAGMA table_info('" + name + "')")
+	if err != nil {
+		log.Error(err)
+	}
+
+	data := make(map[string]string)
+	for rows.Next() {
+		var Cid string
+		var Name string
+		var Type string
+		var Notnull string
+		var Dflt_value string
+		var Pk string
+
+		err := rows.Scan(&Cid, &Name, &Type, &Notnull, &Dflt_value, &Pk)
+
+		if err != nil {
+			log.Error(err)
+		}
+		debug.Dump("===========aType")
+		debug.Dump(Name)
+		debug.Dump(Type)
+
+		if Type == "" || Name == "" {
+			break
+		}
+		data[Name] = Type
+
+	}
+	if len(data) == 0 {
+		return sql.PrimaryKeySchema{}, sql.NewEmptyContext().Err()
+	}
+	newSchemaWithoutCol := make(sql.Schema, len(data))
+
+	i := 0
+	for Name, Type := range data {
+		var sqlType sql.Type
+		sqlType, err = d.ParseColumnStringToSqlType(Type)
+		if err != nil {
+			log.Error(err)
+		}
+		newSchemaWithoutCol[i] = &sql.Column{
+			Name: Name,
+			Type: sqlType,
+		}
+		i++
+	}
+
+	debug.Dump("========newSchemaWithoutCol is ")
+	debug.Dump(newSchemaWithoutCol)
+	schema := sql.NewPrimaryKeySchema(newSchemaWithoutCol)
+
+	return schema, nil
+}
+
 func (d *BaseDatabase) GetTableInsensitive(ctx *sql.Context, tblName string) (sql.Table, bool, error) {
 	debug.Dump("========-> GetTableInsensitive")
 	//ctx := newPersistedSqlContext()
@@ -465,10 +532,26 @@ func (d *BaseDatabase) GetTableInsensitive(ctx *sql.Context, tblName string) (sq
 	// debug.Dump(ctx.Session.GetCurrentDatabase())
 	// debug.Dump(ctx.Session.Address())
 	// debug.Dump("========-> GetTableInsensitive sql.Row")
+	debug.Dump("========-> GetTableInsensitive tables1")
 	// debug.Dump(d.tables)
-	//	d.tables = d.Tables()
-	tbl, ok := sql.GetTableInsensitive(tblName, d.tables)
+	// //	d.tables = d.Tables()
 
+	tbl, ok := sql.GetTableInsensitive(tblName, d.tables)
+	if ok == false {
+
+		schema, err := d.GetTableSchema(tblName)
+		if err == nil {
+			table := NewTable(tblName, sql.NewPrimaryKeySchema(schema.Schema))
+			// debug.Dump(table)
+			d.AddTable(tblName, table)
+
+			debug.Dump("========-> GetTableInsensitive tables2")
+			debug.Dump(d.tables)
+		}
+
+	}
+
+	tbl, ok = sql.GetTableInsensitive(tblName, d.tables)
 	debug.Dump("========-> GetTableInsensitive end")
 	return tbl, ok, nil
 }
@@ -561,7 +644,7 @@ func (d *BaseDatabase) AddTable(name string, t sql.Table) {
 
 // CreateTable creates a table with the given name and schema
 func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.PrimaryKeySchema) error {
-	debug.Dump("=======CreateTable method")
+	debug.Dump("=======CreateTable-1 start")
 	_, ok := d.tables[name]
 	if ok {
 		return sql.ErrTableAlreadyExists.New(name)
@@ -579,8 +662,14 @@ func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.Pri
 	if d.primaryKeyIndexes {
 		table.EnablePrimaryKeyIndexes()
 	}
-	d.createTableToSqlite(table)
+
+	if table.sqlStatement != "" {
+		d.createTableToSqlite(table)
+	}
+
 	d.tables[name] = table
+	debug.Dump(d.tables)
+	debug.Dump("=======CreateTable-1 end")
 	return nil
 }
 
