@@ -48,6 +48,11 @@ func TestTrimString(t *testing.T) {
 
 }
 
+func TestContainsString(t *testing.T) {
+	log.Debug(strings.Contains("sqlite_autoindex_database_infomations_1", "sqlite1_autoindex_")) //true
+	log.Debug(strings.Contains("wi", "widuu"))                                                   //false
+}
+
 func TestTablePartitionsCount(t *testing.T) {
 	require := require.New(t)
 	table := sqlite.NewPartitionedTable("foo", sql.PrimaryKeySchema{}, 5)

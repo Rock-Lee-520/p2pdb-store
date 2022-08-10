@@ -177,14 +177,49 @@ func (d *BaseDatabase) Tables() map[string]sql.Table {
 		if err != nil {
 			log.Error(err)
 		}
-		//debug.Dump(tableName)
-		d.tables[tableName] = d.getTable(tableName)
-		//d.tables[tableName] = Table
+		if strings.Contains(tableName, "sqlite_autoindex_") == false {
+			//debug.Dump(tableName)
+			d.tables[tableName] = d.getTable(tableName)
+			//d.tables[tableName] = Table
+		}
+
 	}
 	//debug.Dump(d.tables)
 	//it  must to be closed or else  will stuck
 	rows.Close()
 	return d.tables
+}
+
+// Tables returns all tables in the database.
+func (d *BaseDatabase) InitTables() {
+	debug.Dump("========-> InitTables method")
+
+	//Get all of table , it not include sqlite_sequence table name
+	// rows, err := d.connection.Query("select name from sqlite_master where name !='sqlite_sequence'")
+	rows, err := d.connection.Query("select name from sqlite_master  where name !='sqlite_sequence' ")
+	debug.Dump("========-> select name from sqlite_master where name !='sqlite_sequence'")
+	if err != nil {
+		log.Error(err)
+	}
+
+	var tableName string
+	//var Table sql.Table
+	for rows.Next() {
+
+		err := rows.Scan(&tableName)
+		if err != nil {
+			log.Error(err)
+		}
+		if strings.Contains(tableName, "sqlite_autoindex_") == false {
+			//debug.Dump(tableName)
+			var newTable = d.getTable(tableName)
+			d.AddTable(tableName, newTable)
+		}
+
+	}
+
+	//it  must to be closed or else  will stuck
+	rows.Close()
 }
 
 func (d *BaseDatabase) ParseColumnStringToSqlType(atype string) (sql.Type, error) {

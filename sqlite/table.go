@@ -272,7 +272,7 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 		rowsCopy := make([]sql.Row, len(rows))
 
 		copy(rowsCopy, rows)
-		debug.Dump(partition)
+		//debug.Dump(partition)
 		return &tableIter{
 			rows:        rowsCopy,
 			indexValues: values,
@@ -285,13 +285,13 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 
 	var sqlStatement = t.handleSelectUnnecessaryCharacters(ctx.RawStatement(), ctx)
 	QueryRows, err := ctx.Connection().Query(sqlStatement)
-	log.Debug("ctx RawStatement=====" + ctx.RawStatement())
-	log.Debug("sqlStatement=====" + sqlStatement)
+	// log.Debug("ctx RawStatement=====" + ctx.RawStatement())
+	// log.Debug("sqlStatement=====" + sqlStatement)
 
 	if err != nil {
 		return nil, sql.ErrPartitionNotFound.New(partition.Key())
 	}
-	debug.Dump("========= QueryRows start ")
+	//debug.Dump("========= QueryRows start ")
 
 	columns, err := QueryRows.Columns()
 	if err != nil {
