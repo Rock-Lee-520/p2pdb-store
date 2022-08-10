@@ -5,6 +5,5 @@ import (
 )
 
 func PublishSyncEvent(eventType string, data interface{}) {
-
 	event.PublishSyncEvent(eventType, event.Message{eventType, data})
 }

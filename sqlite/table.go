@@ -27,9 +27,9 @@ import (
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 	config "github.com/Rock-liyi/p2pdb/infrastructure/util/config"
+	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 	"github.com/dolthub/vitess/go/sqltypes"
 	debug "github.com/favframework/debug"
-	"github.com/opentracing/opentracing-go/log"
 	errors "gopkg.in/src-d/go-errors.v1"
 )
 
@@ -240,6 +240,11 @@ func (t *Table) PartitionCount(ctx *sql.Context) (int64, error) {
 	return int64(len(t.partitions)), nil
 }
 
+func (t *Table) handleSelectUnnecessaryCharacters(selectStatement string, ctx *sql.Context) string {
+	selectStatement = strings.Replace(selectStatement, ctx.GetCurrentDatabase()+".", "", 1)
+	return selectStatement
+}
+
 // PartitionRows implements the sql.PartitionRows interface.
 func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.RowIter, error) {
 
@@ -278,7 +283,11 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 		//return nil, sql.ErrTableNotFound.New("RawStatement func  is null")
 	}
 
-	QueryRows, err := ctx.Connection().Query(ctx.RawStatement())
+	var sqlStatement = t.handleSelectUnnecessaryCharacters(ctx.RawStatement(), ctx)
+	QueryRows, err := ctx.Connection().Query(sqlStatement)
+	log.Debug("ctx RawStatement=====" + ctx.RawStatement())
+	log.Debug("sqlStatement=====" + sqlStatement)
+
 	if err != nil {
 		return nil, sql.ErrPartitionNotFound.New(partition.Key())
 	}
@@ -347,15 +356,15 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 	for i := range columns {
 		columnsInt = append(columnsInt, i)
 	}
-	debug.Dump("==============rowsCopy ")
-	debug.Dump(rowsCopy)
-	debug.Dump("==============columnsInt ")
-	debug.Dump(columnsInt)
-	debug.Dump("==============filters ")
-	debug.Dump(t.filters)
-	debug.Dump("==============values ")
-	debug.Dump(values)
-	debug.Dump("==============PartitionRows end ")
+	// debug.Dump("==============rowsCopy ")
+	// debug.Dump(rowsCopy)
+	// debug.Dump("==============columnsInt ")
+	// debug.Dump(columnsInt)
+	// debug.Dump("==============filters ")
+	// debug.Dump(t.filters)
+	// debug.Dump("==============values ")
+	// debug.Dump(values)
+	// debug.Dump("==============PartitionRows end ")
 
 	return &tableIter{
 		rows:        rowsCopy,
@@ -430,20 +439,20 @@ func (p *partitionIter) Next(*sql.Context) (sql.Partition, error) {
 	debug.Dump("=========partitionIter Next start")
 
 	//TODO i dont know why need to use p.pos >=len(p.keys)
-	debug.Dump("=========(p.keys)")
-	debug.Dump(len(p.keys))
-	debug.Dump("=========(p.keys)")
+	// debug.Dump("=========(p.keys)")
+	// debug.Dump(len(p.keys))
+	// debug.Dump("=========(p.keys)")
 	if p.pos >= len(p.keys) {
 		return nil, io.EOF
 	}
 
 	key := p.keys[p.pos]
 	p.pos++
-	debug.Dump("=========Partition key")
-	debug.Dump(key)
-	debug.Dump("=========Partition")
+	// debug.Dump("=========Partition key")
+	// debug.Dump(key)
+	// debug.Dump("=========Partition")
 
-	debug.Dump("=========partitionIter Next end")
+	// debug.Dump("=========partitionIter Next end")
 	return &Partition{key}, nil
 }
 

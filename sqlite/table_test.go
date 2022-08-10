@@ -17,6 +17,7 @@ package sqlite_test
 import (
 	"fmt"
 	"io"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -25,9 +26,25 @@ import (
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 	"github.com/Rock-liyi/p2pdb-store/sql/parse"
 	"github.com/Rock-liyi/p2pdb-store/sqlite"
+	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 )
 
 func init() {
+
+}
+
+func TestTrimString(t *testing.T) {
+	//require := require.New(t)
+	var d = strings.TrimRight("SELECT * FROM p2pdb.test LIMIT 0, 200", "")
+	log.Debug(d)
+
+	s := "Hello world hello world"
+	str := "hello"
+	//var s = []string{"11","22","33"}
+
+	//删除s尾部连续的包含在str中的字符串
+	ret := strings.Replace(s, str, "", 1)
+	log.Debug(ret) // Hello world hello world
 
 }
 

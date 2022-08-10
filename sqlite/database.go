@@ -160,12 +160,7 @@ func (d *BaseDatabase) Address() string {
 // Tables returns all tables in the database.
 func (d *BaseDatabase) Tables() map[string]sql.Table {
 	debug.Dump("========-> Tables method")
-	//debug.Dump(d.tables)
-	// return d.tables
-	// if len(d.tables) > 0 {
-	// 	return d.tables
-	// }
-	//debug.Dump(d.connection)
+
 	//Get all of table , it not include sqlite_sequence table name
 	// rows, err := d.connection.Query("select name from sqlite_master where name !='sqlite_sequence'")
 	rows, err := d.connection.Query("select name from sqlite_master  where name !='sqlite_sequence' ")
