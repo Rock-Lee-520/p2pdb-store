@@ -285,8 +285,8 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 
 	var sqlStatement = t.handleSelectUnnecessaryCharacters(ctx.RawStatement(), ctx)
 	QueryRows, err := ctx.Connection().Query(sqlStatement)
-	// log.Debug("ctx RawStatement=====" + ctx.RawStatement())
-	// log.Debug("sqlStatement=====" + sqlStatement)
+	log.Debug("ctx RawStatement=====" + ctx.RawStatement())
+	log.Debug("sqlStatement=====" + sqlStatement)
 
 	if err != nil {
 		return nil, sql.ErrPartitionNotFound.New(partition.Key())
@@ -593,6 +593,27 @@ func (t *Table) Updater(ctx *sql.Context) sql.RowUpdater {
 
 	return &tableEditor{t, nil, nil, NewTableEditAccumulator(t), 0}
 }
+
+func (t *Table) ApplyEdits(ctx *sql.Context) error {
+	//debug.Dump("========Updater")
+	//debug.Dump(ctx.RawStatement())
+	apply := &tableEditor{t, nil, nil, NewTableEditAccumulator(t), 0}
+	return apply.Close(ctx)
+}
+
+// func (t *Table) InitTable(ctx *sql.Context, row sql.Row) error {
+// 	debug.Dump("========Updater")
+// 	//debug.Dump(ctx.RawStatement())
+
+// 	updater := &tableEditor{t, nil, nil, NewTableEditAccumulator(t), 0}
+// 	err := updater.ea.Insert(ctx, row)
+// 	//row, bol, err := updater.ea.Get(row)
+// 	//err := updater.Update(ctx, row, row)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return updater.Close(ctx)
+// }
 
 func (t *Table) Replacer(ctx *sql.Context) sql.RowReplacer {
 	debug.Dump("========UpdReplacerater")

@@ -214,6 +214,8 @@ func (d *BaseDatabase) InitTables() {
 			//debug.Dump(tableName)
 			var newTable = d.getTable(tableName)
 			d.AddTable(tableName, newTable)
+			ctx := sql.NewEmptyContext()
+			newTable.ApplyEdits(ctx)
 		}
 
 	}

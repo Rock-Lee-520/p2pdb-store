@@ -25,6 +25,7 @@ import (
 	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	commonEvent "github.com/Rock-liyi/p2pdb/domain/common/event"
+	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 	debug "github.com/favframework/debug"
 )
 
@@ -233,19 +234,32 @@ type tableEditAccumulator interface {
 
 // NewTableEditAccumulator returns a tableEditAccumulator based on the schema.
 func NewTableEditAccumulator(t *Table) tableEditAccumulator {
+	log.Info("call NewTableEditAccumulator method start")
+	log.Info(sql.IsKeyless(t.schema.Schema))
+	//just for occupy position
+	mapString := make(map[int]string)
+	for i, rows := range t.schema.Schema {
+		mapString[i] = rows.Name
+	}
+	row := sql.NewRow(mapString)
+
 	if sql.IsKeyless(t.schema.Schema) {
-		return &keylessTableEditAccumulator{
-			table:   t,
-			adds:    make([]sql.Row, 0),
+		keyless := &keylessTableEditAccumulator{
+			table: t,
+			//just for occupy position
+			adds:    append(make([]sql.Row, 0), row),
 			deletes: make([]sql.Row, 0),
 		}
-	}
 
+		return keyless
+	}
+	log.Info("call NewTableEditAccumulator method end")
 	return &pkTableEditAccumulator{
 		table:   t,
 		adds:    make(map[string]sql.Row),
 		deletes: make(map[string]sql.Row),
 	}
+
 }
 
 // pkTableEditAccumulator manages the updates of keyed tables. It uses a map to efficiently toggle edits.
@@ -306,6 +320,7 @@ func (pke *pkTableEditAccumulator) Get(value sql.Row) (sql.Row, bool, error) {
 
 // ApplyEdits implements the tableEditAccumulator interface.
 func (pke *pkTableEditAccumulator) ApplyEdits(ctx *sql.Context) error {
+	log.Info("call ApplyEdits method start")
 	for _, val := range pke.deletes {
 		err := pke.deleteHelper(ctx, pke.table, val)
 		if err != nil {
@@ -319,7 +334,7 @@ func (pke *pkTableEditAccumulator) ApplyEdits(ctx *sql.Context) error {
 			return err
 		}
 	}
-
+	log.Info("call ApplyEdits method end")
 	return nil
 }
 
@@ -429,6 +444,7 @@ var _ tableEditAccumulator = (*keylessTableEditAccumulator)(nil)
 // Insert implements the tableEditAccumulator interface.
 func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) error {
 	debug.Dump("=======keylessTableEditAccumulator Insert")
+
 	sqlStatement := k.GetInsertSql(value)
 	debug.Dump(sqlStatement)
 	var address string
@@ -467,6 +483,7 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 		debug.Dump(err.Error())
 		return err
 	}
+
 	for i, row := range k.deletes {
 		eq, err := value.Equals(row, k.table.schema.Schema)
 		if err != nil {
