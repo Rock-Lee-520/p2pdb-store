@@ -22,14 +22,13 @@ import (
 
 	//	log "github.com/sirupsen/logrus"
 
-	conf "github.com/Rock-liyi/p2pdb-store/config"
-	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
+	conf "github.com/Rock-liyi/p2pdb/infrastructure/util/config"
 	"github.com/dolthub/vitess/go/sqltypes"
 	debug "github.com/favframework/debug"
 
 	//dbParse "github.com/Rock-liyi/p2pdb-store/sql/parse"
-	commonEvent "github.com/Rock-liyi/p2pdb/domain/common/event"
+
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/opentracing/opentracing-go/log"
 )
@@ -225,7 +224,7 @@ func (d *BaseDatabase) InitTables() {
 }
 
 func (d *BaseDatabase) ParseColumnStringToSqlType(atype string) (sql.Type, error) {
-	debug.Dump("========ParseColumnStringToSqlType")
+	// debug.Dump("========ParseColumnStringToSqlType")
 	types := []struct {
 		columnType      string
 		expectedSqlType sql.Type
@@ -672,7 +671,7 @@ func (d *BaseDatabase) AddTable(name string, t sql.Table) {
 
 	table := NewTable(name, sql.NewPrimaryKeySchema(t.Schema()))
 
-	d.createTableToSqlite(table)
+	table.createTableToSqlite(table)
 	d.tables[name] = t
 }
 
@@ -698,7 +697,7 @@ func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.Pri
 	}
 
 	if table.sqlStatement != "" {
-		d.createTableToSqlite(table)
+		table.createTableToSqlite(table)
 	}
 
 	d.tables[name] = table
@@ -707,23 +706,18 @@ func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.Pri
 	return nil
 }
 
-func (d *BaseDatabase) createTableToSqlite(table *Table) {
-	//it create a  file table by sqlite
-	debug.Dump("=========createTableToSqlite method")
-	debug.Dump(table.sqlStatement)
-	// db, err := dbsql.Open("sqlite3", "/Users/rockli/go/src/p2pdb-server/data/test.db")
-	// if err != nil {
-	// 	log.Error(err)
-	// }
-	// result, err := db.Exec(table.sqlStatement)
-	_, err := d.connection.Exec(table.sqlStatement)
+// func (d *BaseDatabase) createTableToSqlite(table *Table) {
+// 	//it create a  file table by sqlite
+// 	debug.Dump("=========createTableToSqlite method")
+// 	debug.Dump(table.sqlStatement)
+// 	_, err := d.connection.Exec(table.sqlStatement)
 
-	if err != nil {
-		log.Error(err)
-	}
-	event.PublishSyncEvent(commonEvent.StoreCreateTableEvent, table.sqlStatement)
-	debug.Dump("=========createTableToSqlite method end")
-}
+// 	if err != nil {
+// 		log.Error(err)
+// 	}
+// 	event.PublishSyncEvent(commonEvent.StoreCreateTableEvent, table.sqlStatement)
+// 	debug.Dump("=========createTableToSqlite method end")
+// }
 
 // DropTable drops the table with the given name
 func (d *BaseDatabase) DropTable(ctx *sql.Context, name string) error {

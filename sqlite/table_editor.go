@@ -15,13 +15,9 @@
 package sqlite
 
 import (
-	dbsql "database/sql"
 	"fmt"
-	"os"
-	"path/filepath"
 	"strings"
 
-	conf "github.com/Rock-liyi/p2pdb-store/config"
 	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	commonEvent "github.com/Rock-liyi/p2pdb/domain/common/event"
@@ -446,43 +442,16 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 	debug.Dump("=======keylessTableEditAccumulator Insert")
 
 	sqlStatement := k.GetInsertSql(value)
-	debug.Dump(sqlStatement)
-	var address string
-	if ctx.Session.Address() != "" {
-		address = ctx.Session.Address()
-	} else {
-		dataPath := conf.GetDataPath()
-		dataName := conf.GetDBName()
-		// do something here to set environment depending on an environment variable
-		// or command-line flag
-		if dataPath != "" {
-			dataPath = dataPath + "/"
-		}
-		debug.Dump(dataPath)
-		binary, _ := os.Getwd()
-		root := filepath.Dir(binary)
-		if root != "" && dataPath == "" {
-			dataPath = root + "/"
-		}
-		debug.Dump(dataPath + dataName + ".db")
-		address = dataPath + dataName + ".db"
+	db := InitDB()
 
-	}
+	result := db.Exec(sqlStatement)
 
-	db, err := dbsql.Open("sqlite3", address)
-
-	if err != nil {
-		debug.Dump(err.Error())
-		return err
+	if result.Error != nil {
+		log.Error(result.Error)
+		return result.Error
 	}
 
 	event.PublishSyncEvent(commonEvent.StoreInsertEvent, sqlStatement)
-	_, err = db.Exec(sqlStatement)
-
-	if err != nil {
-		debug.Dump(err.Error())
-		return err
-	}
 
 	for i, row := range k.deletes {
 		eq, err := value.Equals(row, k.table.schema.Schema)

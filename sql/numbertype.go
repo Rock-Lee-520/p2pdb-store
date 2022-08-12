@@ -342,7 +342,7 @@ func (t numberTypeImpl) Promote() Type {
 
 // SQL implements Type interface.
 func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
-	debug.Dump("======= SQL method start")
+	//debug.Dump("======= SQL method start")
 	if v == nil {
 		return sqltypes.NULL, nil
 	}
@@ -361,7 +361,7 @@ func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
 	default:
 		panic(ErrInvalidBaseType.New(t.baseType.String(), "number"))
 	}
-	debug.Dump("======= SQL method end")
+	//debug.Dump("======= SQL method end")
 	return sqltypes.MakeTrusted(t.baseType, val), nil
 }
 

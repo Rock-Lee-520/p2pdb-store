@@ -3,7 +3,14 @@ package sqlite
 import (
 	"encoding/json"
 	"strconv"
+
+	orm "github.com/Rock-liyi/p2pdb/infrastructure/core/orm"
 )
+
+func InitDB() orm.DBconnect {
+	var ORM *orm.CreateDBFactory = new(orm.CreateDBFactory)
+	return ORM.InitDB()
+}
 
 // Strval 获取变量的字符串值
 // 浮点型 3.0将会转换成字符串3, "3"

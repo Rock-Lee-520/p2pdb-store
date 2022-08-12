@@ -16,7 +16,6 @@ package sqlite
 
 import (
 	"bytes"
-	dbsql "database/sql"
 	"encoding/gob"
 	"fmt"
 	"io"
@@ -24,9 +23,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
-	config "github.com/Rock-liyi/p2pdb/infrastructure/util/config"
+
 	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 	"github.com/dolthub/vitess/go/sqltypes"
 	debug "github.com/favframework/debug"
@@ -158,26 +158,26 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 	return table
 }
 
+func (t *Table) TableExists(name string) bool {
+	var db = InitDB()
+	return db.Migrator().HasTable(name)
+}
+
 func (t *Table) createTableToSqlite(table *Table) {
 	//it create a  file table by sqlite
-	debug.Dump("=========Table createTableToSqlite method")
-	debug.Dump(table.sqlStatement)
-	path := config.GetDataPath()
-	DBname := config.GetDBName()
+	log.Info("=========Table createTableToSqlite method start")
+	log.Debug(t.TableExists(table.name))
+	if !t.TableExists(table.name) {
+		var db = InitDB()
+		result := db.Exec(table.sqlStatement)
 
-	DBPath := path + "/" + DBname + ".db"
-	debug.Dump(DBPath)
-	db, err := dbsql.Open("sqlite3", DBPath)
-	if err != nil {
-		log.Error(err)
+		if result.Error != nil {
+			log.Error(result.Error)
+		}
+		event.PublishSyncEvent(event.StoreCreateTableEvent, table.sqlStatement)
 	}
-	result, err := db.Exec(table.sqlStatement)
-	//_, err = db.connection.Exec(table.sqlStatement)
-	debug.Dump(result)
-	if err != nil {
-		log.Error(err)
-	}
-	debug.Dump("=========Table createTableToSqlite method end")
+
+	log.Info("=========Table createTableToSqlite method end")
 }
 
 // Name implements the sql.Table interface.

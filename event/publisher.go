@@ -1,9 +1,16 @@
 package event
 
 import (
-	"github.com/Rock-liyi/p2pdb/application/event"
+	api "github.com/Rock-liyi/p2pdb/interface/api"
 )
 
+type Message struct {
+	Type string
+	Data interface{}
+}
+
 func PublishSyncEvent(eventType string, data interface{}) {
-	event.PublishSyncEvent(eventType, event.Message{eventType, data})
+	var eventApi = api.EventApi{}
+
+	eventApi.PublishSyncEvent(eventType, Message{eventType, data})
 }

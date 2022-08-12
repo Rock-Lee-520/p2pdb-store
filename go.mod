@@ -5,8 +5,7 @@ go 1.16
 // replace github.com/Rock-liyi/p2pdb => ../p2pdb
 
 require (
-	github.com/Rock-liyi/p2pdb v0.0.5
-	github.com/caarlos0/env/v6 v6.9.3
+	github.com/Rock-liyi/p2pdb v0.0.6
 	github.com/cespare/xxhash v1.1.0
 	github.com/dolthub/vitess v0.0.0-20211215165926-1490f8c93e81
 	github.com/favframework/debug v0.0.0-20150708094948-5c7e73aafb21
@@ -14,7 +13,6 @@ require (
 	github.com/gocraft/dbr/v2 v2.7.3
 	github.com/google/uuid v1.3.0
 	github.com/hashicorp/golang-lru v0.5.4
-	github.com/joho/godotenv v1.4.0
 	github.com/lestrrat-go/strftime v1.0.6
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/mitchellh/hashstructure v1.1.0
