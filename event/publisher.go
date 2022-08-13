@@ -9,8 +9,8 @@ type Message struct {
 	Data interface{}
 }
 
-func PublishSyncEvent(eventType string, data interface{}) {
+func PublishSyncEvent(eventType string, data string) {
 	var eventApi = api.EventApi{}
 
-	eventApi.PublishSyncEvent(eventType, Message{eventType, data})
+	eventApi.PublishSyncEvent(eventType, data)
 }

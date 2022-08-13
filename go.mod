@@ -5,7 +5,7 @@ go 1.16
 // replace github.com/Rock-liyi/p2pdb => ../p2pdb
 
 require (
-	github.com/Rock-liyi/p2pdb v0.0.6
+	github.com/Rock-liyi/p2pdb v0.0.7
 	github.com/cespare/xxhash v1.1.0
 	github.com/dolthub/vitess v0.0.0-20211215165926-1490f8c93e81
 	github.com/favframework/debug v0.0.0-20150708094948-5c7e73aafb21
