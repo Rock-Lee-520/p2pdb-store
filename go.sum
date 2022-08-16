@@ -81,7 +81,6 @@ github.com/Rock-liyi/p2pdb-store v0.1.0/go.mod h1:a6ONL/QOz18Z0EEJM/niNjAfZUqd7z
 github.com/Rock-liyi/p2pdb-store v0.1.2/go.mod h1:Fy2jeEzhc6TII0K6mC4PtyU0oAJI9dxTW+KZRLkA268=
 github.com/Rock-liyi/p2pdb-store v0.1.6/go.mod h1:BDxaWCViejGs8SRlnbXS2OwSibvBKFVl4Ck0uCWX0XA=
 github.com/Rock-liyi/p2pdb-store v0.1.7/go.mod h1:PbT9bko8/GD8h4Q/I9V56Zn6cp3QpYZUhzBDAYFSwko=
-github.com/Rock-liyi/p2pdb-store v0.1.8 h1:eVoMoec75mG1cU9HF3y7phpSa0+MsognG7ev+QFdDPI=
 github.com/Rock-liyi/p2pdb-store v0.1.8/go.mod h1:mgCOQ44ycqrL6PMHUVXYqlvCiaBMnbUJ4VudECCdGe4=
 github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWXgklEdEo=
 github.com/Shopify/sarama v1.30.0/go.mod h1:zujlQQx1kzHsh4jfV1USnptCQrHAEZ2Hk8fTKCulPVs=

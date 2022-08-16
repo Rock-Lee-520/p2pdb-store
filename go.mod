@@ -1,10 +1,9 @@
-module github.com/kkguan/p2pdb-store
+module github.com/Rock-liyi/p2pdb-store
 
 go 1.17
 
 require (
 	github.com/Rock-liyi/p2pdb v0.0.8
-	github.com/Rock-liyi/p2pdb-store v0.1.8
 	github.com/cespare/xxhash v1.1.0
 	github.com/dolthub/vitess v0.0.0-20211215165926-1490f8c93e81
 	github.com/favframework/debug v0.0.0-20150708094948-5c7e73aafb21
