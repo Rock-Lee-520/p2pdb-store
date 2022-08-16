@@ -23,7 +23,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Rock-liyi/p2pdb-store/event"
+	"github.com/Rock-liyi/p2pdb-store/entity"
+	"github.com/Rock-liyi/p2pdb-store/entity/value_object"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 
@@ -174,7 +175,8 @@ func (t *Table) createTableToSqlite(table *Table) {
 		if result.Error != nil {
 			log.Error(result.Error)
 		}
-		event.PublishSyncEvent(event.StoreCreateTableEvent, table.sqlStatement)
+		var eventData = entity.Data{TableName: table.name, SQLStatement: table.sqlStatement, DDLActionType: value_object.DATABASE, DDLType: value_object.CREATE}
+		entity.PublishSyncEvent(value_object.StoreCreateTableEvent, eventData)
 	}
 
 	log.Info("=========Table createTableToSqlite method end")

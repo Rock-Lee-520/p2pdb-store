@@ -18,9 +18,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
-	commonEvent "github.com/Rock-liyi/p2pdb/domain/common/event"
 	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 	debug "github.com/favframework/debug"
 )
@@ -451,7 +449,7 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 		return result.Error
 	}
 
-	event.PublishSyncEvent(commonEvent.StoreInsertEvent, sqlStatement)
+	//event.PublishSyncEvent(commonEvent.StoreInsertEvent, sqlStatement)
 
 	for i, row := range k.deletes {
 		eq, err := value.Equals(row, k.table.schema.Schema)
