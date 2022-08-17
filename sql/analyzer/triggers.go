@@ -20,6 +20,8 @@ import (
 
 	"github.com/dolthub/vitess/go/vt/sqlparser"
 
+	"github.com/Rock-liyi/p2pdb-store/entity"
+	"github.com/Rock-liyi/p2pdb-store/entity/value_object"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 	"github.com/Rock-liyi/p2pdb-store/sql/parse"
@@ -139,6 +141,8 @@ func applyTriggers(ctx *sql.Context, a *Analyzer, n sql.Node, scope *Scope) (sql
 				db = n.Database().Name()
 			}
 			debugs.Dump("====applyTriggers start it is InsertInto ")
+			var eventData = entity.Data{DatabaseName: ctx.GetCurrentDatabase(), TableName: getTableName(n), SQLStatement: ctx.RawStatement(), DMLType: value_object.INSERT}
+			entity.PublishSyncEvent(value_object.StoreInsertEvent, eventData)
 		case *plan.Update:
 			affectedTables = append(affectedTables, getTableName(n))
 			triggerEvent = plan.UpdateTrigger
@@ -146,19 +150,30 @@ func applyTriggers(ctx *sql.Context, a *Analyzer, n sql.Node, scope *Scope) (sql
 				db = n.Database()
 			}
 			debugs.Dump("====applyTriggers start it is Update ")
+			var eventData = entity.Data{DatabaseName: ctx.GetCurrentDatabase(), TableName: getTableName(n), SQLStatement: ctx.RawStatement(), DMLType: value_object.UPDATE}
+			entity.PublishSyncEvent(value_object.StoreUpdateEvent, eventData)
+
 		case *plan.DeleteFrom:
 			affectedTables = append(affectedTables, getTableName(n))
 			triggerEvent = plan.DeleteTrigger
 			if n.Database() != "" {
 				db = n.Database()
 			}
-			debugs.Dump("====applyTriggers start it is DeleteFrom ")
+			var eventData = entity.Data{DatabaseName: ctx.GetCurrentDatabase(), TableName: getTableName(n), SQLStatement: ctx.RawStatement(), DMLType: value_object.DELETE}
+			entity.PublishSyncEvent(value_object.StoreInsertEvent, eventData)
+
+			debugs.Dump("====applyTriggers start it is DeleteFrom , tableName is" + getTableName(n))
 		}
 		return true
 	})
-	debugs.Dump("====applyTriggers triggerEvent")
-	debugs.Dump(triggerEvent)
-	debugs.Dump("====applyTriggers triggerEvent")
+
+	//publish a dml event
+	// debugs.Dump("====applyTriggers triggerEvent")
+	// debugs.Dump(triggerEvent)
+	// debugs.Dump(ctx.GetCurrentDatabase())
+	// debugs.Dump(ctx.RawStatement())
+
+	// debugs.Dump("====applyTriggers triggerEvent")
 	if len(affectedTables) == 0 {
 		return n, nil
 	}

@@ -18,6 +18,7 @@ import (
 	"gopkg.in/src-d/go-errors.v1"
 
 	"github.com/Rock-liyi/p2pdb-store/sql"
+	debug "github.com/favframework/debug"
 )
 
 var ErrDeleteFromNotSupported = errors.NewKind("table doesn't support DELETE FROM")
@@ -95,6 +96,7 @@ func (p *DeleteFrom) Database() string {
 
 // RowIter implements the Node interface.
 func (p *DeleteFrom) RowIter(ctx *sql.Context, row sql.Row) (sql.RowIter, error) {
+	debug.Dump("DeleteFrom ===========RowIter start")
 	// If an empty table is passed in (potentially from a bad filter) return an empty row iter.
 	// Note: emptyTable could also implement sql.DetetableTable
 	if _, ok := p.Child.(*emptyTable); ok {
@@ -112,7 +114,7 @@ func (p *DeleteFrom) RowIter(ctx *sql.Context, row sql.Row) (sql.RowIter, error)
 	}
 
 	deleter := deletable.Deleter(ctx)
-
+	debug.Dump("DeleteFrom ===========RowIter end")
 	return newDeleteIter(iter, deleter, deletable.Schema()), nil
 }
 

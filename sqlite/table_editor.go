@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Rock-liyi/p2pdb-store/entity"
+	"github.com/Rock-liyi/p2pdb-store/entity/value_object"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 	debug "github.com/favframework/debug"
@@ -86,11 +88,6 @@ func (t *tableEditor) Insert(ctx *sql.Context, row sql.Row) error {
 		}
 		return sql.NewUniqueKeyErr(fmt.Sprint(vals), true, partitionRow)
 	}
-	//insert   a new row into the sqlite  by   connection of context
-	// err = t.InsertToSqlite(ctx, row)
-	// if err != nil {
-	// 	return err
-	// }
 
 	err = t.ea.Insert(ctx, row)
 	if err != nil {
@@ -441,6 +438,7 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 
 	sqlStatement := k.GetInsertSql(value)
 	db := InitDB()
+	debug.Dump(sqlStatement)
 
 	result := db.Exec(sqlStatement)
 
@@ -449,7 +447,8 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 		return result.Error
 	}
 
-	//event.PublishSyncEvent(commonEvent.StoreInsertEvent, sqlStatement)
+	var eventData = entity.Data{TableName: k.table.name, SQLStatement: sqlStatement, DMLType: value_object.INSERT}
+	entity.PublishSyncEvent(value_object.StoreInsertEvent, eventData)
 
 	for i, row := range k.deletes {
 		eq, err := value.Equals(row, k.table.schema.Schema)
@@ -463,13 +462,6 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 	}
 
 	k.adds = append(k.adds, value)
-
-	// session := ctx.Session.(sql.PersistableSession)
-	// db := session.Connection()
-
-	// debug.Dump(db)
-	// debug.Dump(value)
-	// debug.Dump(k.adds)
 
 	debug.Dump("========pkTableEditAccumulator  InsertToSqlite p2pdb-store")
 

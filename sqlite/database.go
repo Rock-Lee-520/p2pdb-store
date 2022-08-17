@@ -22,6 +22,8 @@ import (
 
 	//	log "github.com/sirupsen/logrus"
 
+	"github.com/Rock-liyi/p2pdb-store/entity"
+	"github.com/Rock-liyi/p2pdb-store/entity/value_object"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	conf "github.com/Rock-liyi/p2pdb/infrastructure/util/config"
 	"github.com/dolthub/vitess/go/sqltypes"
@@ -683,13 +685,6 @@ func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.Pri
 		return sql.ErrTableAlreadyExists.New(name)
 	}
 
-	// db, err := dbsql.Open("sqlite3", "/Users/rockli/go/src/p2pdb-server/data/test.db")
-	// if err != nil {
-	// 	log.Error(err)
-	// }
-	// result, err := db.Exec(table.sqlStatement)
-	//db := ctx.GetCurrentDatabase()
-
 	table := NewTable(name, schema)
 
 	if d.primaryKeyIndexes {
@@ -701,7 +696,7 @@ func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.Pri
 	}
 
 	d.tables[name] = table
-	debug.Dump(d.tables)
+	//debug.Dump(d.tables)
 	debug.Dump("=======CreateTable-1 end")
 	return nil
 }
@@ -733,10 +728,9 @@ func (d *BaseDatabase) DropTable(ctx *sql.Context, name string) error {
 		debug.Dump("show error=========")
 		log.Error(err)
 	}
-	// _, err = stmt.Exec(name)
-	// if err != nil {
-	// 	log.Error(err)
-	// }
+	var eventData = entity.Data{TableName: name, SQLStatement: "DROP TABLE  " + name, DDLActionType: value_object.TABLE, DDLType: value_object.DROP}
+	entity.PublishSyncEvent(value_object.StoreDropTableEvent, eventData)
+
 	delete(d.tables, name)
 	debug.Dump("=========DropTable method end")
 	return nil

@@ -7,10 +7,16 @@ const (
 )
 
 const (
+	//DML
+	INSERT = "insert"
+	DELETE = "delete"
+	UPDATE = "update"
 	//DDL
 	CREATE = "create"
+	DROP   = "drop"
 	//DDLActionType
 	DATABASE = "database"
+	TABLE    = "table"
 )
 
 //p2pdb-store EventType

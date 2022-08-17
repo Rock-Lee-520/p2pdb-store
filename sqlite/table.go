@@ -175,7 +175,7 @@ func (t *Table) createTableToSqlite(table *Table) {
 		if result.Error != nil {
 			log.Error(result.Error)
 		}
-		var eventData = entity.Data{TableName: table.name, SQLStatement: table.sqlStatement, DDLActionType: value_object.DATABASE, DDLType: value_object.CREATE}
+		var eventData = entity.Data{TableName: table.name, SQLStatement: table.sqlStatement, DDLActionType: value_object.TABLE, DDLType: value_object.CREATE}
 		entity.PublishSyncEvent(value_object.StoreCreateTableEvent, eventData)
 	}
 
@@ -285,8 +285,10 @@ func (t *Table) PartitionRows(ctx *sql.Context, partition sql.Partition) (sql.Ro
 		//return nil, sql.ErrTableNotFound.New("RawStatement func  is null")
 	}
 
+	//TODO need to be different method to do the right thing
 	var sqlStatement = t.handleSelectUnnecessaryCharacters(ctx.RawStatement(), ctx)
 	QueryRows, err := ctx.Connection().Query(sqlStatement)
+
 	log.Debug("ctx RawStatement=====" + ctx.RawStatement())
 	log.Debug("sqlStatement=====" + sqlStatement)
 
