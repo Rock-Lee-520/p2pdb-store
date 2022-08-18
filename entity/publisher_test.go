@@ -2,10 +2,11 @@ package entity
 
 import (
 	"bytes"
-	_ "github.com/Rock-liyi/p2pdb/application/event/subscribe" //注册事件监听
 	"math/rand"
 	"testing"
 	"time"
+
+	_ "github.com/Rock-liyi/p2pdb/application/event/subscribe" //注册事件监听
 	//common_event "github.com/Rock-liyi/p2pdb/domain/common/event"
 )
 
@@ -42,6 +43,6 @@ func randUpString(l int) []byte {
 }
 
 func TestPublishAsyncEvent(t *testing.T) {
-	data := randUpString(19)
+	//	data := randUpString(19)
 	//PublishSyncEvent(common_event.StoreAlterTableEvent, data)
 }
