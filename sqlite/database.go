@@ -32,7 +32,8 @@ import (
 	//dbParse "github.com/Rock-liyi/p2pdb-store/sql/parse"
 
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/opentracing/opentracing-go/log"
+	//"github.com/opentracing/opentracing-go/log"
+	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 )
 
 // Database is an in-sqlite database.
@@ -422,7 +423,7 @@ type ParseColumn struct {
 
 // getTable select a  Table with the given name in the database .
 func (d *BaseDatabase) getTable(name string) *Table {
-	debug.Dump("======= getTable method")
+	log.Info("======= getTable method start")
 	// rowss, err := d.connection.QueryContext(sql.NewEmptyContext(), "PRAGMA table_info('"+name+"')")
 	// debug.Dump(rowss.Columns())
 	// if err != nil {
@@ -452,9 +453,9 @@ func (d *BaseDatabase) getTable(name string) *Table {
 		if err != nil {
 			log.Error(err)
 		}
-		debug.Dump("===========aType")
-		debug.Dump(Name)
-		debug.Dump(Type)
+		// debug.Dump("===========aType")
+		// debug.Dump(Name)
+		// debug.Dump(Type)
 
 		if Type == "" || Name == "" {
 			break
@@ -480,10 +481,10 @@ func (d *BaseDatabase) getTable(name string) *Table {
 		i++
 	}
 
-	debug.Dump("========newSchemaWithoutCol is ")
-	debug.Dump(newSchemaWithoutCol)
+	// debug.Dump("========newSchemaWithoutCol is ")
+	// debug.Dump(newSchemaWithoutCol)
 	schema := sql.NewPrimaryKeySchema(newSchemaWithoutCol)
-
+	log.Info("======= getTable method end")
 	return NewPartitionedTable(name, schema, 0)
 }
 
