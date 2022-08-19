@@ -3,7 +3,7 @@ module github.com/Rock-liyi/p2pdb-store
 go 1.17
 
 require (
-	github.com/Rock-liyi/p2pdb v0.0.8
+	github.com/Rock-liyi/p2pdb v0.0.10
 	github.com/cespare/xxhash v1.1.0
 	github.com/dolthub/vitess v0.0.0-20211215165926-1490f8c93e81
 	github.com/favframework/debug v0.0.0-20150708094948-5c7e73aafb21
@@ -28,7 +28,7 @@ require (
 
 require (
 	github.com/Rock-liyi/p2pdb-discovery v0.0.1 // indirect
-	github.com/Rock-liyi/p2pdb-pubsub v0.0.6 // indirect
+	github.com/Rock-liyi/p2pdb-pubsub v0.0.7 // indirect
 	github.com/Rock-liyi/p2pdb-server v0.1.2 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect

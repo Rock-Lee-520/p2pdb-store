@@ -25,6 +25,7 @@ import (
 
 	"github.com/Rock-liyi/p2pdb-store/entity"
 	"github.com/Rock-liyi/p2pdb-store/entity/value_object"
+	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	"github.com/Rock-liyi/p2pdb-store/sql/expression"
 
@@ -176,7 +177,7 @@ func (t *Table) createTableToSqlite(table *Table) {
 			log.Error(result.Error)
 		}
 		var eventData = entity.Data{TableName: table.name, SQLStatement: table.sqlStatement, DDLActionType: value_object.TABLE, DDLType: value_object.CREATE}
-		entity.PublishSyncEvent(value_object.StoreCreateTableEvent, eventData)
+		event.PublishSyncEvent(value_object.StoreCreateTableEvent, eventData)
 	}
 
 	log.Info("=========Table createTableToSqlite method end")

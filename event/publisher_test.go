@@ -1,12 +1,11 @@
-package entity
+package event
 
 import (
 	"bytes"
 	"math/rand"
 	"testing"
 	"time"
-
-	_ "github.com/Rock-liyi/p2pdb/application/event/subscribe" //注册事件监听
+	//_ "github.com/Rock-liyi/p2pdb/application/event/subscribe" //注册事件监听
 	//common_event "github.com/Rock-liyi/p2pdb/domain/common/event"
 )
 

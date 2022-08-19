@@ -1,4 +1,4 @@
-package entity
+package event
 
 import (
 	"github.com/Rock-liyi/p2pdb/infrastructure/util/function"

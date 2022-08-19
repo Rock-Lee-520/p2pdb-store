@@ -24,6 +24,7 @@ import (
 
 	"github.com/Rock-liyi/p2pdb-store/entity"
 	"github.com/Rock-liyi/p2pdb-store/entity/value_object"
+	"github.com/Rock-liyi/p2pdb-store/event"
 	"github.com/Rock-liyi/p2pdb-store/sql"
 	conf "github.com/Rock-liyi/p2pdb/infrastructure/util/config"
 	"github.com/dolthub/vitess/go/sqltypes"
@@ -730,7 +731,7 @@ func (d *BaseDatabase) DropTable(ctx *sql.Context, name string) error {
 		log.Error(err)
 	}
 	var eventData = entity.Data{TableName: name, SQLStatement: "DROP TABLE  " + name, DDLActionType: value_object.TABLE, DDLType: value_object.DROP}
-	entity.PublishSyncEvent(value_object.StoreDropTableEvent, eventData)
+	event.PublishSyncEvent(value_object.StoreDropTableEvent, eventData)
 
 	delete(d.tables, name)
 	debug.Dump("=========DropTable method end")
