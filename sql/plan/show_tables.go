@@ -41,6 +41,7 @@ var showTablesFullSchema = sql.Schema{
 // NewShowTables creates a new show tables node given a database.
 func NewShowTables(database sql.Database, full bool, asOf sql.Expression) *ShowTables {
 	debug.Dump("===========NewShowTables")
+	debug.Dump(database)
 	return &ShowTables{
 		db:   database,
 		Full: full,

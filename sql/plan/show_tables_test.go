@@ -18,6 +18,7 @@ import (
 	"io"
 	"testing"
 
+	log "github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 	"github.com/stretchr/testify/require"
 
 	"github.com/Rock-liyi/p2pdb-store/sql"
@@ -39,6 +40,7 @@ func TestShowTables(t *testing.T) {
 	db.AddTable("test3", sqlite.NewTable("test3", sql.PrimaryKeySchema{}))
 
 	resolvedShowTables := NewShowTables(db, false, nil)
+	log.Debug(resolvedShowTables)
 	require.True(resolvedShowTables.Resolved())
 	require.Nil(resolvedShowTables.Children())
 

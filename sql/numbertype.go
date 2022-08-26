@@ -207,7 +207,7 @@ func (t numberTypeImpl) Compare(a interface{}, b interface{}) (int, error) {
 
 // Convert implements Type interface.
 func (t numberTypeImpl) Convert(v interface{}) (interface{}, error) {
-	debug.Dump("Convert======")
+	//debug.Dump("Convert======")
 	if v == nil {
 		return nil, nil
 	}
@@ -453,7 +453,7 @@ func (t numberTypeImpl) IsSigned() bool {
 }
 
 func convertToInt64(t numberTypeImpl, v interface{}) (int64, error) {
-	debug.Dump("convertToInt64======")
+	//debug.Dump("convertToInt64======")
 	switch v := v.(type) {
 	case int:
 		return int64(v), nil
@@ -524,7 +524,7 @@ func convertToInt64(t numberTypeImpl, v interface{}) (int64, error) {
 }
 
 func convertToUint64(t numberTypeImpl, v interface{}) (uint64, error) {
-	debug.Dump("convertToUint64======")
+	//debug.Dump("convertToUint64======")
 	switch v := v.(type) {
 	case int:
 		if v < 0 {
@@ -603,7 +603,7 @@ func convertToUint64(t numberTypeImpl, v interface{}) (uint64, error) {
 }
 
 func convertToFloat64(t numberTypeImpl, v interface{}) (float64, error) {
-	debug.Dump("convertToFloat64======")
+	//debug.Dump("convertToFloat64======")
 	switch v := v.(type) {
 	case int:
 		return float64(v), nil

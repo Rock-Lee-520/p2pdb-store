@@ -3260,6 +3260,33 @@ CREATE TABLE t2
 	`KILL CONNECTION 1`:                  plan.NewKill(plan.KillType_Connection, 1),
 }
 
+func TestParseShowFullTable(t *testing.T) {
+
+	var fixtures = map[string]sql.Node{
+		`SHOW FULL TABLES FROM foo`: plan.NewShowTables(sql.UnresolvedDatabase("foo"), true, nil),
+	}
+	var queriesInOrder []string
+	for q := range fixtures {
+		queriesInOrder = append(queriesInOrder, q)
+	}
+	sort.Strings(queriesInOrder)
+
+	for _, query := range queriesInOrder {
+		expectedPlan := fixtures[query]
+		t.Run(query, func(t *testing.T) {
+			require := require.New(t)
+			ctx := sql.NewEmptyContext()
+			p, err := Parse(ctx, query)
+			debug.Dump("parse is")
+			debug.Dump(p)
+			require.NoError(err)
+			if !assertNodesEqualWithDiff(t, expectedPlan, p) {
+				t.Logf("Unexpected result for query %s", query)
+			}
+		})
+	}
+}
+
 func TestParse(t *testing.T) {
 	var queriesInOrder []string
 	for q := range fixtures {

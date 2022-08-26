@@ -113,7 +113,7 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 	sqlStatement := "CREATE TABLE  " + name
 	oldSqlStatement := "CREATE TABLE  " + name
 	var count = 0
-	var hasName = false
+	//var hasName = false
 
 	for i, c := range schema.Schema {
 
@@ -124,10 +124,18 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		}
 		if c.Name != "" && count == 0 {
 			sqlStatement = sqlStatement + " ("
-			hasName = true
+			//hasName = true
+		}
+		//log.Debug("show type is ")
+
+		var Type string
+		if c.Type == nil {
+			Type = "TEXT"
+		} else {
+			Type = c.Type.Type().String()
 		}
 
-		sqlStatement = sqlStatement + " " + c.Name + " " + c.Type.Type().String()
+		sqlStatement = sqlStatement + " " + c.Name + " " + Type
 
 		if c.Nullable == false {
 			sqlStatement = sqlStatement + " NOT NULL"
@@ -138,13 +146,15 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 	}
 
 	if sqlStatement == oldSqlStatement {
-		sqlStatement = ""
+		sqlStatement = sqlStatement + "("
+		sqlStatement = sqlStatement + " _ROW_ID TEXT NULL"
 	} else {
 		sqlStatement = strings.TrimRight(sqlStatement, ",")
-		if hasName {
-			sqlStatement = sqlStatement + " )"
-		}
+		// if hasName {
+
+		// }
 	}
+	sqlStatement = sqlStatement + " )"
 
 	debug.Dump(sqlStatement)
 	table := &Table{
