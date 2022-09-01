@@ -752,7 +752,9 @@ func (t *Table) GetNextAutoIncrementValue(ctx *sql.Context, insertVal interface{
 }
 
 func (t *Table) AddColumn(ctx *sql.Context, column *sql.Column, order *sql.ColumnOrder) error {
+	log.Debug(" call AddColumn method start")
 	newColIdx := t.addColumnToSchema(ctx, column, order)
+	log.Debug(" call AddColumn method start")
 	return t.insertValueInRows(ctx, newColIdx, column.Default)
 }
 

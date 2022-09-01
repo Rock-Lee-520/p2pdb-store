@@ -12,8 +12,9 @@ const (
 	DELETE = "delete"
 	UPDATE = "update"
 	//DDL
-	CREATE = "create"
-	DROP   = "drop"
+	CREATE             = "create"
+	DROP               = "drop"
+	ALTER_TABLE_RENAME = "alter_table_rename"
 	//DDLActionType
 	DATABASE = "database"
 	TABLE    = "table"

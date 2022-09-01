@@ -718,7 +718,7 @@ func (d *BaseDatabase) CreateTable(ctx *sql.Context, name string, schema sql.Pri
 
 // DropTable drops the table with the given name
 func (d *BaseDatabase) DropTable(ctx *sql.Context, name string) error {
-	debug.Dump("=========DropTable method start")
+	log.Debug("=========DropTable method start")
 	d.tables = d.Tables()
 	_, ok := d.tables[name]
 	if !ok {
@@ -727,18 +727,21 @@ func (d *BaseDatabase) DropTable(ctx *sql.Context, name string) error {
 	//delete table from  in the database
 	_, err := d.connection.Exec("DROP TABLE  " + name)
 	if err != nil {
-		debug.Dump("show error=========")
+		//debug.Dump("show error=========")
 		log.Error(err)
 	}
 	var eventData = entity.Data{TableName: name, SQLStatement: "DROP TABLE  " + name, DDLActionType: value_object.TABLE, DDLType: value_object.DROP}
 	event.PublishSyncEvent(value_object.StoreDropTableEvent, eventData)
 
 	delete(d.tables, name)
-	debug.Dump("=========DropTable method end")
+	log.Debug("=========DropTable method end")
 	return nil
 }
 
 func (d *BaseDatabase) RenameTable(ctx *sql.Context, oldName, newName string) error {
+	log.Debug("=========RenameTable method start")
+
+	//defulat code
 	tbl, ok := d.tables[oldName]
 	if !ok {
 		// Should be impossible (engine already checks this condition)
@@ -750,10 +753,21 @@ func (d *BaseDatabase) RenameTable(ctx *sql.Context, oldName, newName string) er
 		return sql.ErrTableAlreadyExists.New(newName)
 	}
 
+	//sqlite code
+	SQLStatement := "ALTER TABLE " + oldName + "  RENAME TO " + newName
+	_, err := d.connection.Exec(SQLStatement)
+	if err != nil {
+		//debug.Dump("show error=========")
+		log.Error(err)
+	}
+
+	var eventData = entity.Data{TableName: oldName, SQLStatement: SQLStatement, DDLActionType: value_object.TABLE, DDLType: value_object.ALTER_TABLE_RENAME}
+	event.PublishSyncEvent(value_object.StoreDropTableEvent, eventData)
+
 	tbl.(*Table).name = newName
 	d.tables[newName] = tbl
 	delete(d.tables, oldName)
-
+	log.Debug("=========RenameTable method end")
 	return nil
 }
 
