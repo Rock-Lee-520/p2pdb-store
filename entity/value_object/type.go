@@ -27,10 +27,11 @@ const (
 	StoreDeleteEvent = "store_delete_event"
 	StoreInsertEvent = "store_insert_event"
 	//DDL table
-	StoreCreateTableEvent   = "store_create_table_event"
-	StoreAlterTableEvent    = "store_alter_table_event"
-	StoreDropTableEvent     = "store_drop_table_event"
-	StoreTruncateTableEvent = "store_truncate_table_event"
+	StoreCreateTableEvent      = "store_create_table_event"
+	StoreAlterTableEvent       = "store_alter_table_event"
+	StoreAlterTableRenameEvent = "store_alter_table_rename_event"
+	StoreDropTableEvent        = "store_drop_table_event"
+	StoreTruncateTableEvent    = "store_truncate_table_event"
 	//DDL database
 	StoreDropDatabaseEvent   = "store_drop_database_event"
 	StoreCreateDatabaseEvent = "store_create_database_event"
@@ -44,6 +45,7 @@ var StoreEventType = [...]string{
 	//DDL table
 	StoreCreateTableEvent,
 	StoreAlterTableEvent,
+	StoreAlterTableRenameEvent,
 	StoreDropTableEvent,
 	StoreTruncateTableEvent,
 	StoreDropDatabaseEvent,

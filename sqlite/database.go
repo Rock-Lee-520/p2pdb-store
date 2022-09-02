@@ -762,7 +762,7 @@ func (d *BaseDatabase) RenameTable(ctx *sql.Context, oldName, newName string) er
 	}
 
 	var eventData = entity.Data{TableName: oldName, SQLStatement: SQLStatement, DDLActionType: value_object.TABLE, DDLType: value_object.ALTER_TABLE_RENAME}
-	event.PublishSyncEvent(value_object.StoreDropTableEvent, eventData)
+	event.PublishSyncEvent(value_object.StoreAlterTableRenameEvent, eventData)
 
 	tbl.(*Table).name = newName
 	d.tables[newName] = tbl
