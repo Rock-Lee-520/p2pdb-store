@@ -44,11 +44,19 @@ const (
 )
 
 var (
+
 	// ErrValidationResolved is returned when the plan can not be resolved.
-	ErrValidationResolved = errors.NewKind("plan is not resolved because of node '%T'")
+	ErrValidationTableExisted = errors.NewKind("No table '%T' information was found, maybe you can try to use a database first")
+
+	// ErrValidationResolved is returned when the plan can not be resolved.
+	//ErrValidationResolved = errors.NewKind("plan is not resolved because of node '%T'")
+
+	ErrValidationResolved = errors.NewKind("No table  information was found, maybe you can try to use a database first, the error detail (plan is not resolved because of node '%T') ")
+
 	// ErrValidationOrderBy is returned when the order by contains aggregation
 	// expressions.
 	ErrValidationOrderBy = errors.NewKind("OrderBy does not support aggregation expressions")
+
 	// ErrValidationGroupBy is returned when the aggregation expression does not
 	// appear in the grouping columns.
 	ErrValidationGroupBy = errors.NewKind("expression '%v' doesn't appear in the group by expressions")
@@ -185,6 +193,7 @@ func validateIsResolved(ctx *sql.Context, a *Analyzer, n sql.Node, scope *Scope)
 
 // unresolvedError returns an appropriate error message for the unresolved node given
 func unresolvedError(n sql.Node) error {
+	log.Debug("call the method unresolvedError start ")
 	var err error
 	var walkFn func(sql.Expression) bool
 	walkFn = func(e sql.Expression) bool {
