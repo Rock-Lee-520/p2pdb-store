@@ -93,6 +93,8 @@ func NewTable(name string, schema sql.PrimaryKeySchema) *Table {
 
 // NewPartitionedTable creates a new Table with the given name, schema and number of partitions.
 func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions int) *Table {
+	debug.Dump("=======call NewPartitionedTable")
+	//debug.Dump(schema.Schema)
 	var keys [][]byte
 	var partitions = map[string][]sql.Row{}
 
@@ -117,16 +119,10 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 
 	for i, c := range schema.Schema {
 
-		if c.AutoIncrement {
-			autoIncVal = sql.NumericUnaryValue(c.Type)
-			autoIncIdx = i
-			break
-		}
 		if c.Name != "" && count == 0 {
 			sqlStatement = sqlStatement + " ("
 			//hasName = true
 		}
-		//log.Debug("show type is ")
 
 		var Type string
 		if c.Type == nil {
@@ -134,11 +130,27 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		} else {
 			Type = c.Type.Type().String()
 		}
+		if sql.IsInteger(c.Type) {
+			Type = "INTEGER"
+		}
 
-		sqlStatement = sqlStatement + " " + c.Name + " " + Type
+		debug.Dump("this type is")
+		debug.Dump(Type)
+		if c.AutoIncrement && c.PrimaryKey {
+			autoIncVal = sql.NumericUnaryValue(c.Type)
+			autoIncIdx = i
+
+			sqlStatement = sqlStatement + " " + c.Name + " " + Type + "  PRIMARY KEY  AUTOINCREMENT"
+
+			//break
+		} else {
+			sqlStatement = sqlStatement + " " + c.Name + " " + Type
+			debug.Dump(sqlStatement)
+
+		}
 
 		if c.Nullable == false {
-			sqlStatement = sqlStatement + " NOT NULL"
+			sqlStatement = sqlStatement + "  NOT NULL"
 		}
 
 		sqlStatement = sqlStatement + ","
@@ -147,13 +159,12 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 
 	if sqlStatement == oldSqlStatement {
 		sqlStatement = sqlStatement + "("
-		sqlStatement = sqlStatement + " _ROW_ID TEXT NULL"
-	} else {
-		sqlStatement = strings.TrimRight(sqlStatement, ",")
-		// if hasName {
 
-		// }
+	} else {
+		//sqlStatement = strings.TrimRight(sqlStatement, ",")
 	}
+
+	sqlStatement = sqlStatement + " _ROW_ID TEXT NULL"
 	sqlStatement = sqlStatement + " )"
 
 	debug.Dump(sqlStatement)
@@ -181,6 +192,7 @@ func (t *Table) createTableToSqlite(table *Table) {
 	log.Debug(t.TableExists(table.name))
 	if !t.TableExists(table.name) {
 		var db = InitDB()
+
 		result := db.Exec(table.sqlStatement)
 
 		if result.Error != nil {

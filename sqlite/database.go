@@ -566,27 +566,27 @@ func (d *BaseDatabase) GetTableInsensitive(ctx *sql.Context, tblName string) (sq
 	ctx.Session.SetCurrentDatabase(d.Name())
 	ctx.Session.SetAddress(d.Address())
 	ctx.Session.SetConnection(d.Connection())
-	// debug.Dump(ctx.Session.GetCurrentDatabase())
-	// debug.Dump(ctx.Session.Address())
-	// debug.Dump("========-> GetTableInsensitive sql.Row")
+	debug.Dump(ctx.Session.GetCurrentDatabase())
+	debug.Dump(ctx.Session.Address())
+	//debug.Dump("========-> GetTableInsensitive sql.Row")
 	debug.Dump("========-> GetTableInsensitive tables1")
-	// debug.Dump(d.tables)
+	debug.Dump(d.tables)
 	// //	d.tables = d.Tables()
 
 	tbl, ok := sql.GetTableInsensitive(tblName, d.tables)
-	// if ok == false {
+	if ok == false {
+		debug.Dump("GetTableInsensitive is false")
+		// 	schema, err := d.GetTableSchema(tblName)
+		// 	if err == nil {
+		// 		table := NewTable(tblName, sql.NewPrimaryKeySchema(schema.Schema))
+		// 		// debug.Dump(table)
+		// 		d.AddTable(tblName, table)
 
-	// 	schema, err := d.GetTableSchema(tblName)
-	// 	if err == nil {
-	// 		table := NewTable(tblName, sql.NewPrimaryKeySchema(schema.Schema))
-	// 		// debug.Dump(table)
-	// 		d.AddTable(tblName, table)
+		// 		debug.Dump("========-> GetTableInsensitive tables2")
+		// 		debug.Dump(d.tables)
+		// 	}
 
-	// 		debug.Dump("========-> GetTableInsensitive tables2")
-	// 		debug.Dump(d.tables)
-	// 	}
-
-	// }
+	}
 
 	// tbl, ok = sql.GetTableInsensitive(tblName, d.tables)
 	debug.Dump("========-> GetTableInsensitive end")
@@ -629,7 +629,7 @@ type HistoryDatabase struct {
 var _ sql.VersionedDatabase = (*HistoryDatabase)(nil)
 
 func (db *HistoryDatabase) GetTableInsensitiveAsOf(ctx *sql.Context, tblName string, time interface{}) (sql.Table, bool, error) {
-	debug.Dump("============GetTableInsensitiveAsOf")
+	debug.Dump("============GetTableInsensitiveAsOf start")
 	table, ok := db.Revisions[strings.ToLower(tblName)][time]
 	if ok {
 		return table, true, nil
@@ -639,7 +639,7 @@ func (db *HistoryDatabase) GetTableInsensitiveAsOf(ctx *sql.Context, tblName str
 	if _, ok := db.Revisions[strings.ToLower(tblName)]; ok {
 		return nil, false, sql.ErrTableNotFound.New(tblName)
 	}
-
+	debug.Dump("============GetTableInsensitiveAsOf end")
 	// Otherwise (this table has no revisions), return it as an unversioned lookup
 	return db.GetTableInsensitive(ctx, tblName)
 }

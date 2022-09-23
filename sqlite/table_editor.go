@@ -472,8 +472,9 @@ func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) er
 func (k *keylessTableEditAccumulator) GetInsertSql(value sql.Row) string {
 
 	debug.Dump("=============GetInsertSql")
-	debug.Dump(value)
+
 	sqlStatement := "INSERT INTO  " + k.table.name
+	debug.Dump(sqlStatement)
 	var count = 0
 	var hasName = false
 

@@ -342,11 +342,11 @@ func (t numberTypeImpl) Promote() Type {
 
 // SQL implements Type interface.
 func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
-	//debug.Dump("======= SQL method start")
+	debug.Dump("======= SQL method start")
 	if v == nil {
 		return sqltypes.NULL, nil
 	}
-
+	debug.Dump(v)
 	var val []byte
 	switch t.baseType {
 	case sqltypes.Int8, sqltypes.Int16, sqltypes.Int24, sqltypes.Int32, sqltypes.Int64:
@@ -361,7 +361,7 @@ func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
 	default:
 		panic(ErrInvalidBaseType.New(t.baseType.String(), "number"))
 	}
-	//debug.Dump("======= SQL method end")
+	debug.Dump("======= SQL method end")
 	return sqltypes.MakeTrusted(t.baseType, val), nil
 }
 
@@ -709,4 +709,54 @@ func mustUint64(v interface{}) uint64 {
 	default:
 		panic("unexpected type")
 	}
+}
+
+// sqlite store
+func isInteger(t Type) (bool, query.Type) {
+	debug.Dump("======NumericUnaryValue")
+	var integer bool
+	integer = false
+	nt := t.(numberTypeImpl)
+	switch nt.baseType {
+	case sqltypes.Int8:
+		integer = true
+	case sqltypes.Uint8:
+		integer = true
+	case sqltypes.Int16:
+		integer = true
+	case sqltypes.Uint16:
+		integer = true
+	case sqltypes.Int24:
+		integer = true
+	case sqltypes.Uint24:
+		integer = true
+	case sqltypes.Int32:
+		integer = true
+	case sqltypes.Uint32:
+		integer = true
+	case sqltypes.Int64:
+		integer = true
+	case sqltypes.Uint64:
+		integer = true
+	default:
+		// panic(fmt.Sprintf("%v is not a valid number base type", nt.baseType.String()))
+	}
+	return integer, nt.baseType
+}
+
+// sqlite store
+func isReal(t Type) (bool, query.Type) {
+	debug.Dump("======NumericUnaryValue")
+	var real bool
+	real = false
+	nt := t.(numberTypeImpl)
+	switch nt.baseType {
+	case sqltypes.Float32:
+		real = true
+	case sqltypes.Float64:
+		real = true
+	default:
+		// panic(fmt.Sprintf("%v is not a valid number base type", nt.baseType.String()))
+	}
+	return real, nt.baseType
 }

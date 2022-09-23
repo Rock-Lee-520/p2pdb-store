@@ -16,6 +16,7 @@ package plan
 
 import (
 	"github.com/Rock-liyi/p2pdb-store/sql"
+	"github.com/Rock-liyi/p2pdb/infrastructure/util/log"
 )
 
 // ProcedureResolvedTable represents a resolved SQL Table inside of a stored procedure. These are initially resolved to
@@ -117,6 +118,7 @@ func (t *ProcedureResolvedTable) PartitionRows(ctx *sql.Context, partition sql.P
 
 // newestTable fetches the newest copy of the contained table from the database.
 func (t *ProcedureResolvedTable) newestTable(ctx *sql.Context) (*ResolvedTable, error) {
+	log.Info("=============call newestTable start")
 	// If no database was given, such as with the "dual" table, then we return the given table as-is.
 	if t.ResolvedTable.Database == nil {
 		return t.ResolvedTable, nil
