@@ -523,6 +523,9 @@ func IsArray(t Type) bool {
 
 // IsBlob checks if t is BINARY, VARBINARY, or BLOB
 func IsBlob(t Type) bool {
+	// debug.Dump("===========IsBlob start 2")
+	// debug.Dump(t)
+	// return false
 	switch t.Type() {
 	case sqltypes.Binary, sqltypes.VarBinary, sqltypes.Blob:
 		return true

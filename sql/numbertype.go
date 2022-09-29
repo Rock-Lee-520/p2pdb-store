@@ -346,11 +346,11 @@ func (t numberTypeImpl) SQL(v interface{}) (sqltypes.Value, error) {
 	if v == nil {
 		return sqltypes.NULL, nil
 	}
-	debug.Dump(v)
+	//debug.Dump(v)
 	var val []byte
 	switch t.baseType {
 	case sqltypes.Int8, sqltypes.Int16, sqltypes.Int24, sqltypes.Int32, sqltypes.Int64:
-		debug.Dump(t.baseType)
+		//debug.Dump(t.baseType)
 		val = []byte(strconv.FormatInt(mustInt64(v), 10))
 	case sqltypes.Uint8, sqltypes.Uint16, sqltypes.Uint24, sqltypes.Uint32, sqltypes.Uint64:
 		val = []byte(strconv.FormatUint(mustUint64(v), 10))

@@ -266,6 +266,10 @@ func (d *BaseDatabase) ParseColumnStringToSqlType(atype string) (sql.Type, error
 			sql.Int64,
 		},
 		{
+			"INTEGER",
+			sql.Int64,
+		},
+		{
 			"TINYINT UNSIGNED",
 			sql.Uint8,
 		},
@@ -361,6 +365,11 @@ func (d *BaseDatabase) ParseColumnStringToSqlType(atype string) (sql.Type, error
 			"CHAR(5)",
 			sql.MustCreateStringWithDefaults(sqltypes.Char, 5),
 		},
+		{
+			"VARCHAR",
+			sql.MustCreateStringWithDefaults(sqltypes.VarChar, 255),
+		},
+
 		{
 			"VARCHAR(255)",
 			sql.MustCreateStringWithDefaults(sqltypes.VarChar, 255),

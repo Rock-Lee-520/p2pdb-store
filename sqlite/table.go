@@ -130,18 +130,19 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		} else {
 			Type = c.Type.Type().String()
 		}
-		if sql.IsInteger(c.Type) {
-			Type = "INTEGER"
-		}
 
 		debug.Dump("this type is")
 		debug.Dump(Type)
-		if c.AutoIncrement && c.PrimaryKey {
-			autoIncVal = sql.NumericUnaryValue(c.Type)
-			autoIncIdx = i
-
-			sqlStatement = sqlStatement + " " + c.Name + " " + Type + "  PRIMARY KEY  AUTOINCREMENT"
-
+		if c.PrimaryKey {
+			if sql.IsInteger(c.Type) {
+				Type = "INTEGER"
+			}
+			sqlStatement = sqlStatement + " " + c.Name + " " + Type + "  PRIMARY KEY  "
+			if c.AutoIncrement {
+				autoIncVal = sql.NumericUnaryValue(c.Type)
+				autoIncIdx = i
+				sqlStatement = sqlStatement + " AUTOINCREMENT"
+			}
 			//break
 		} else {
 			sqlStatement = sqlStatement + " " + c.Name + " " + Type
@@ -161,10 +162,10 @@ func NewPartitionedTable(name string, schema sql.PrimaryKeySchema, numPartitions
 		sqlStatement = sqlStatement + "("
 
 	} else {
-		//sqlStatement = strings.TrimRight(sqlStatement, ",")
+		sqlStatement = strings.TrimRight(sqlStatement, ",")
 	}
 
-	sqlStatement = sqlStatement + " _ROW_ID TEXT NULL"
+	//sqlStatement = sqlStatement + " _ROW_ID TEXT NULL"
 	sqlStatement = sqlStatement + " )"
 
 	debug.Dump(sqlStatement)
