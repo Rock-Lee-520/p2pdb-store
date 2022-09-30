@@ -690,6 +690,8 @@ func mustInt64(v interface{}) int64 {
 }
 
 func mustUint64(v interface{}) uint64 {
+	debug.Dump(v)
+
 	switch tv := v.(type) {
 	case uint:
 		return uint64(tv)
@@ -700,6 +702,16 @@ func mustUint64(v interface{}) uint64 {
 	case uint32:
 		return uint64(tv)
 	case uint64:
+		return uint64(tv)
+	case int:
+		return uint64(tv)
+	case int8:
+		return uint64(tv)
+	case int16:
+		return uint64(tv)
+	case int32:
+		return uint64(tv)
+	case int64:
 		return uint64(tv)
 	case bool:
 		if tv {

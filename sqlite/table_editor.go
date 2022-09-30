@@ -111,19 +111,6 @@ func (t *tableEditor) Insert(ctx *sql.Context, row sql.Row) error {
 	return nil
 }
 
-// func (t *tableEditor) InsertToSqlite(ctx *sql.Context, row sql.Row) error {
-// 	debug.Dump("========tableEditor InsertToSqlite p2pdb-store")
-// 	session := ctx.Session.(sql.PersistableSession)
-// 	db := session.Connection()
-
-// 	debug.Dump(db)
-// 	debug.Dump(row)
-
-// 	debug.Dump("========tableEditor  InsertToSqlite p2pdb-store")
-// 	err := t.ea.Insert(ctx, row)
-// 	return err
-// }
-
 // Delete the given row from the table.
 func (t *tableEditor) Delete(ctx *sql.Context, row sql.Row) error {
 	if err := checkRow(t.table.schema.Schema, row); err != nil {
@@ -265,14 +252,31 @@ var _ tableEditAccumulator = (*pkTableEditAccumulator)(nil)
 
 // Insert implements the tableEditAccumulator interface.
 func (pke *pkTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) error {
+	err := GetInsertSql(value, pke.table.schema.Schema, pke.table.name)
+	if err != nil {
+		return err
+	}
 
-	debug.Dump("========pkTableEditAccumulator InsertToSqlite p2pdb-store")
+	debug.Dump("========pkTableEditAccumulator Insert p2pdb-store")
 	rowKey := pke.getRowKey(value)
 	delete(pke.deletes, rowKey)
 	pke.adds[rowKey] = value
 
 	return nil
 }
+
+// func (t *tableEditor) InsertToSqlite(ctx *sql.Context, row sql.Row) error {
+// 	debug.Dump("========tableEditor InsertToSqlite p2pdb-store")
+// 	session := ctx.Session.(sql.PersistableSession)
+// 	db := session.Connection()
+
+// 	debug.Dump(db)
+// 	debug.Dump(row)
+
+// 	debug.Dump("========tableEditor  InsertToSqlite p2pdb-store")
+// 	err := t.ea.Insert(ctx, row)
+// 	return err
+// }
 
 // Delete implements the tableEditAccumulator interface.
 func (pke *pkTableEditAccumulator) Delete(value sql.Row) error {
@@ -433,52 +437,31 @@ type keylessTableEditAccumulator struct {
 
 var _ tableEditAccumulator = (*keylessTableEditAccumulator)(nil)
 
-// Insert implements the tableEditAccumulator interface.
-func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) error {
-	debug.Dump("=======keylessTableEditAccumulator Insert")
+// func InsertToSqlite(ctx *sql.Context, row sql.Row) error {
+// 	sqlStatement := k.GetInsertSql(value)
+// 	db := InitDB()
+// 	debug.Dump(sqlStatement)
 
-	sqlStatement := k.GetInsertSql(value)
-	db := InitDB()
-	debug.Dump(sqlStatement)
+// 	result := db.Exec(sqlStatement)
 
-	result := db.Exec(sqlStatement)
+// 	if result.Error != nil {
+// 		log.Error(result.Error)
+// 		return result.Error
+// 	}
 
-	if result.Error != nil {
-		log.Error(result.Error)
-		return result.Error
-	}
+// 	return nil
+// }
 
-	var eventData = entity.Data{TableName: k.table.name, SQLStatement: sqlStatement, DMLType: value_object.INSERT}
-	event.PublishSyncEvent(value_object.StoreInsertEvent, eventData)
-
-	for i, row := range k.deletes {
-		eq, err := value.Equals(row, k.table.schema.Schema)
-		if err != nil {
-			return err
-		}
-
-		if eq {
-			k.deletes = append(k.deletes[:i], k.deletes[i+1:]...)
-		}
-	}
-
-	k.adds = append(k.adds, value)
-
-	debug.Dump("========pkTableEditAccumulator  InsertToSqlite p2pdb-store")
-
-	return nil
-}
-
-func (k *keylessTableEditAccumulator) GetInsertSql(value sql.Row) string {
+func GetInsertSql(value sql.Row, schema sql.Schema, tableName string) error {
 
 	debug.Dump("=============GetInsertSql")
 
-	sqlStatement := "INSERT INTO  " + k.table.name
+	sqlStatement := "INSERT INTO  " + tableName
 	debug.Dump(sqlStatement)
 	var count = 0
 	var hasName = false
 
-	for _, c := range k.table.schema.Schema {
+	for _, c := range schema {
 
 		if c.Name != "" && count == 0 {
 			sqlStatement = sqlStatement + " ("
@@ -509,9 +492,104 @@ func (k *keylessTableEditAccumulator) GetInsertSql(value sql.Row) string {
 	values += ")"
 	sqlStatement = sqlStatement + " " + values
 
-	return sqlStatement
+	db := InitDB()
+	debug.Dump(sqlStatement)
+
+	result := db.Exec(sqlStatement)
+
+	if result.Error != nil {
+		log.Error(result.Error)
+		return result.Error
+	}
+	var eventData = entity.Data{TableName: tableName, SQLStatement: sqlStatement, DMLType: value_object.INSERT}
+	event.PublishSyncEvent(value_object.StoreInsertEvent, eventData)
+
+	return nil
 
 }
+
+// Insert implements the tableEditAccumulator interface.
+func (k *keylessTableEditAccumulator) Insert(ctx *sql.Context, value sql.Row) error {
+	debug.Dump("=======keylessTableEditAccumulator Insert start")
+	err := GetInsertSql(value, k.table.schema.Schema, k.table.name)
+	if err != nil {
+		return err
+	}
+	// sqlStatement := k.GetInsertSql(value)
+	// db := InitDB()
+	// debug.Dump(sqlStatement)
+
+	// result := db.Exec(sqlStatement)
+
+	// if result.Error != nil {
+	// 	log.Error(result.Error)
+	// 	return result.Error
+	// }
+
+	// var eventData = entity.Data{TableName: k.table.name, SQLStatement: sqlStatement, DMLType: value_object.INSERT}
+	// event.PublishSyncEvent(value_object.StoreInsertEvent, eventData)
+
+	for i, row := range k.deletes {
+		eq, err := value.Equals(row, k.table.schema.Schema)
+		if err != nil {
+			return err
+		}
+
+		if eq {
+			k.deletes = append(k.deletes[:i], k.deletes[i+1:]...)
+		}
+	}
+
+	k.adds = append(k.adds, value)
+
+	debug.Dump("========keylessTableEditAccumulator  Insert  end")
+
+	return nil
+}
+
+// func (k *keylessTableEditAccumulator) GetInsertSql(value sql.Row) string {
+
+// 	debug.Dump("=============GetInsertSql")
+
+// 	sqlStatement := "INSERT INTO  " + k.table.name
+// 	debug.Dump(sqlStatement)
+// 	var count = 0
+// 	var hasName = false
+
+// 	for _, c := range k.table.schema.Schema {
+
+// 		if c.Name != "" && count == 0 {
+// 			sqlStatement = sqlStatement + " ("
+// 			hasName = true
+// 		}
+
+// 		sqlStatement = sqlStatement + c.Name
+
+// 		// if c.Nullable == false {
+// 		// 	sqlStatement = sqlStatement + " NOT NULL"
+// 		// }
+
+// 		sqlStatement = sqlStatement + ","
+// 		count++
+// 	}
+
+// 	sqlStatement = strings.TrimRight(sqlStatement, ",")
+// 	if hasName {
+// 		sqlStatement = sqlStatement + " )"
+// 	}
+
+// 	values := "VALUES("
+// 	for _, v := range value {
+
+// 		values = values + "'" + Strval(v) + "'" + ","
+// 	}
+// 	values = strings.TrimRight(values, ",")
+// 	values += ")"
+// 	sqlStatement = sqlStatement + " " + values
+
+// 	return sqlStatement
+
+// }
 
 // Delete implements the tableEditAccumulator interface.
 func (k *keylessTableEditAccumulator) Delete(value sql.Row) error {
